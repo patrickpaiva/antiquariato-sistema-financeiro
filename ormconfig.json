@@ -1,0 +1,17 @@
+{
+  "type": "postgres",
+  "host": "localhost",
+  "port": 35464,
+  "username": "postgres",
+  "password": "02ac53c82335e9b28f4a7c54901934ae",
+  "database": "antiquariato",
+  "entities": [
+    "./src/models/*.ts"
+  ],
+  "migrations": [
+    "./src/database/migrations/*.ts"
+  ],
+  "cli": {
+    "migrationsDir": "./src/database/migrations"
+  }
+}
