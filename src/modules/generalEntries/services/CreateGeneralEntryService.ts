@@ -1,8 +1,8 @@
-import { getCustomRepository } from 'typeorm'
-import GeneralEntry from '../models/GeneralEntry'
-import GeneralEntriesRepository from '../repositories/GeneralEntriesRepository'
+import GeneralEntry from '@modules/generalEntries/infra/typeorm/entities/GeneralEntry'
+import IGeneralEntriesRepository from '@modules/generalEntries/repositories/IGeneralEntriesRepository'
+import { injectable, inject } from 'tsyringe'
 
-interface Request {
+interface IRequest {
   date: Date
   description: string
   value: number
@@ -16,7 +16,13 @@ interface Request {
   authorized_by?: string
 }
 
+@injectable()
 class CreateGeneralEntryService {
+  constructor(
+    @inject('GeneralEntriesRepository')
+    private generalEntriesRepository: IGeneralEntriesRepository,
+  ) {}
+
   public async execute({
     date,
     description,
@@ -29,12 +35,8 @@ class CreateGeneralEntryService {
     statement_id,
     created_by,
     authorized_by,
-  }: Request): Promise<GeneralEntry> {
-    const generalEntriesRepository = getCustomRepository(
-      GeneralEntriesRepository,
-    )
-
-    const generalEntry = generalEntriesRepository.create({
+  }: IRequest): Promise<GeneralEntry> {
+    const generalEntry = await this.generalEntriesRepository.create({
       date,
       description,
       value,
@@ -47,8 +49,6 @@ class CreateGeneralEntryService {
       created_by,
       authorized_by,
     })
-
-    await generalEntriesRepository.save(generalEntry)
 
     return generalEntry
   }

@@ -1,4 +1,14 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm'
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  OneToOne,
+  JoinColumn,
+} from 'typeorm'
+
+import Statement from '@modules/statements/infra/typeorm/entities/Statement'
 
 @Entity('general_entries')
 class GeneralEntry {
@@ -32,16 +42,20 @@ class GeneralEntry {
   @Column()
   statement_id: string
 
+  @OneToOne(() => Statement, statement => statement.entry_id)
+  @JoinColumn({ name: 'statement_id' })
+  statement: Statement
+
   @Column()
   created_by: string
 
   @Column()
   authorized_by: string
 
-  @Column('timestamp with time zone')
+  @CreateDateColumn()
   created_at: Date
 
-  @Column('timestamp with time zone')
+  @UpdateDateColumn()
   updated_at: Date
 }
 
