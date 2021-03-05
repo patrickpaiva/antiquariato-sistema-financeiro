@@ -5,6 +5,7 @@ interface IGeneralEntriesRepository {
   findByDate(date: Date): Promise<GeneralEntry[] | undefined>
   findById(id: string): Promise<GeneralEntry | undefined>
   create(data: ICreateGeneralEntryDTO): Promise<GeneralEntry>
+  update(data: GeneralEntry): Promise<void>
 }
 
 export default IGeneralEntriesRepository

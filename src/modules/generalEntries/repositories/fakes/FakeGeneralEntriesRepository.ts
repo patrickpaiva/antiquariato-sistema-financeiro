@@ -70,6 +70,16 @@ class GeneralEntriesRepository implements IGeneralEntriesRepository {
 
     return generalEntry
   }
+
+  public async update(generalEntry: GeneralEntry): Promise<void> {
+    const filteredGeneralEntries = this.generalEntries.filter(
+      item => item.id !== generalEntry.id,
+    )
+
+    filteredGeneralEntries.push(generalEntry)
+
+    this.generalEntries = filteredGeneralEntries
+  }
 }
 
 export default GeneralEntriesRepository

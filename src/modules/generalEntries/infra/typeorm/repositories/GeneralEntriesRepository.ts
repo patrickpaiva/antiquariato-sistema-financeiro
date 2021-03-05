@@ -56,6 +56,10 @@ class GeneralEntriesRepository implements IGeneralEntriesRepository {
 
     return generalEntry
   }
+
+  public async update(generalEntry: GeneralEntry): Promise<void> {
+    await this.ormRepository.save(generalEntry)
+  }
 }
 
 export default GeneralEntriesRepository
