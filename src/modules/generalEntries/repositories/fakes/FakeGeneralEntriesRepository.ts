@@ -1,28 +1,27 @@
+import { uuid } from 'uuidv4'
+
 import GeneralEntry from '@modules/generalEntries/infra/typeorm/entities/GeneralEntry'
-import { getRepository, Repository } from 'typeorm'
 
 import IGeneralEntriesRepository from '@modules/generalEntries/repositories/IGeneralEntriesRepository'
 import ICreateGeneralEntryDTO from '@modules/generalEntries/dtos/ICreateGeneralEntryDTO'
 
 class GeneralEntriesRepository implements IGeneralEntriesRepository {
-  private ormRepository: Repository<GeneralEntry>
-
-  constructor() {
-    this.ormRepository = getRepository(GeneralEntry)
-  }
+  private generalEntries: GeneralEntry[] = []
 
   public async findById(id: string): Promise<GeneralEntry | undefined> {
-    const findEntry = await this.ormRepository.findOne({
-      where: { id },
-    })
+    const findGeneralEntry = this.generalEntries.find(
+      generalEntry => generalEntry.id === id,
+    )
 
-    return findEntry
+    return findGeneralEntry
   }
 
   public async findByDate(date: Date): Promise<GeneralEntry[] | undefined> {
-    const findEntry = await this.ormRepository.find({ where: { date } })
+    const findGeneralEntry = this.generalEntries.filter(
+      generalEntry => generalEntry.date === date,
+    )
 
-    return findEntry
+    return findGeneralEntry
   }
 
   public async create({
@@ -38,7 +37,10 @@ class GeneralEntriesRepository implements IGeneralEntriesRepository {
     created_by,
     authorized_by,
   }: ICreateGeneralEntryDTO): Promise<GeneralEntry> {
-    const generalEntry = this.ormRepository.create({
+    const generalEntry = new GeneralEntry()
+
+    Object.assign(generalEntry, {
+      id: uuid(),
       date,
       description,
       value,
@@ -51,8 +53,20 @@ class GeneralEntriesRepository implements IGeneralEntriesRepository {
       created_by,
       authorized_by,
     })
+    // generalEntry.id = uuid()
+    // generalEntry.date = date
+    // generalEntry.description = description
+    // generalEntry.value = value
+    // generalEntry.type = type
+    // generalEntry.status = status
+    // generalEntry.cost_center = cost_center
+    // generalEntry.presentation_rubric = presentation_rubric
+    // generalEntry.specific_rubric = specific_rubric
+    // generalEntry.statement_id = statement_id || ''
+    // generalEntry.created_by = created_by
+    // generalEntry.authorized_by = authorized_by || ''
 
-    await this.ormRepository.save(generalEntry)
+    this.generalEntries.push(generalEntry)
 
     return generalEntry
   }
