@@ -2,8 +2,7 @@ import ICreateGeneralEntryDTO from '@modules/generalEntries/dtos/ICreateGeneralE
 import IFilterParamsDTO from '@modules/generalEntries/dtos/IFilterParamsDTO'
 import GeneralEntry from '@modules/generalEntries/infra/typeorm/entities/GeneralEntry'
 import IGeneralEntriesRepository from '@modules/generalEntries/repositories/IGeneralEntriesRepository'
-import { Between, getRepository, IsNull, Not, Raw, Repository } from 'typeorm'
-import { addDays, format } from 'date-fns'
+import { Between, getRepository, IsNull, Not, Repository } from 'typeorm'
 
 class GeneralEntriesRepository implements IGeneralEntriesRepository {
   private ormRepository: Repository<GeneralEntry>

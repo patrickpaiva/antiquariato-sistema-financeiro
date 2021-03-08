@@ -18,4 +18,9 @@ generalEntriesRouter.post(
   generalEntriesController.linkStatement,
 )
 
+generalEntriesRouter.post(
+  '/unlink_statement',
+  generalEntriesController.unlinkStatement,
+)
+
 export default generalEntriesRouter

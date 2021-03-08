@@ -4,6 +4,7 @@ import { container } from 'tsyringe'
 import CreateGeneralEntryService from '@modules/generalEntries/services/CreateGeneralEntryService'
 import LinkGeneralEntryToStatementService from '@modules/generalEntries/services/LinkGeneralEntryToStatementService'
 import ListAllGeneralEntriesService from '@modules/generalEntries/services/ListAllGeneralEntriesService'
+import UnlinkGeneralEntryToStatementService from '@modules/generalEntries/services/UnlinkGeneralEntryToStatementService'
 
 export default class GeneralEntriesController {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -54,6 +55,24 @@ export default class GeneralEntriesController {
     })
 
     return response.json(link)
+  }
+
+  public async unlinkStatement(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { id, statement_id } = request.body
+
+    const unlinkGeneralEntryToStatementService = container.resolve(
+      UnlinkGeneralEntryToStatementService,
+    )
+
+    const unlink = await unlinkGeneralEntryToStatementService.execute({
+      id,
+      statement_id,
+    })
+
+    return response.json(unlink)
   }
 
   public async show(request: Request, response: Response): Promise<Response> {
