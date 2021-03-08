@@ -38,15 +38,14 @@ class GeneralEntriesRepository implements IGeneralEntriesRepository {
       return generalEntries
     } else {
       const generalEntries = await this.ormRepository.find({
-        order: {
-          date: 'DESC',
-        },
-        where: {
-          date:
-            params.minDate && params.maxDate
-              ? Between(params.minDate, params.maxDate)
-              : Not(IsNull()),
-        },
+        date:
+          params.minDate && params.maxDate
+            ? Between(params.minDate, params.maxDate)
+            : Not(IsNull()),
+        value:
+          params.minValue && params.maxValue
+            ? Between(params.minValue, params.maxValue)
+            : Not(IsNull()),
       })
 
       return generalEntries
