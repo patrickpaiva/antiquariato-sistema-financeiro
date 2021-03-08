@@ -1,9 +1,9 @@
-import GeneralEntry from '@modules/generalEntries/infra/typeorm/entities/GeneralEntry'
-import { Between, getRepository, MoreThan, Repository } from 'typeorm'
-
-import IGeneralEntriesRepository from '@modules/generalEntries/repositories/IGeneralEntriesRepository'
 import ICreateGeneralEntryDTO from '@modules/generalEntries/dtos/ICreateGeneralEntryDTO'
 import IFilterParamsDTO from '@modules/generalEntries/dtos/IFilterParamsDTO'
+import GeneralEntry from '@modules/generalEntries/infra/typeorm/entities/GeneralEntry'
+import IGeneralEntriesRepository from '@modules/generalEntries/repositories/IGeneralEntriesRepository'
+import { Between, getRepository, IsNull, Not, Raw, Repository } from 'typeorm'
+import { addDays, format } from 'date-fns'
 
 class GeneralEntriesRepository implements IGeneralEntriesRepository {
   private ormRepository: Repository<GeneralEntry>
@@ -42,10 +42,10 @@ class GeneralEntriesRepository implements IGeneralEntriesRepository {
           date: 'DESC',
         },
         where: {
-          date: Between(
-            params.minDate || '2000-01-01',
-            params.maxDate || '2100-01-01',
-          ),
+          date:
+            params.minDate && params.maxDate
+              ? Between(params.minDate, params.maxDate)
+              : Not(IsNull()),
         },
       })
 
