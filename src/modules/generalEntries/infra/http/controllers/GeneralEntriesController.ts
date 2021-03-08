@@ -3,6 +3,7 @@ import { container } from 'tsyringe'
 
 import CreateGeneralEntryService from '@modules/generalEntries/services/CreateGeneralEntryService'
 import LinkGeneralEntryToStatementService from '@modules/generalEntries/services/LinkGeneralEntryToStatementService'
+import ListAllGeneralEntriesService from '@modules/generalEntries/services/ListAllGeneralEntriesService'
 
 export default class GeneralEntriesController {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -53,5 +54,13 @@ export default class GeneralEntriesController {
     })
 
     return response.json(link)
+  }
+
+  public async show(request: Request, response: Response): Promise<Response> {
+    const listGeneralEntries = container.resolve(ListAllGeneralEntriesService)
+
+    const generalEntries = await listGeneralEntries.execute(request.body)
+
+    return response.json(generalEntries)
   }
 }

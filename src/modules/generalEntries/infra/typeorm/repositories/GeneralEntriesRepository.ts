@@ -1,8 +1,9 @@
 import GeneralEntry from '@modules/generalEntries/infra/typeorm/entities/GeneralEntry'
-import { getRepository, Repository } from 'typeorm'
+import { Between, getRepository, MoreThan, Repository } from 'typeorm'
 
 import IGeneralEntriesRepository from '@modules/generalEntries/repositories/IGeneralEntriesRepository'
 import ICreateGeneralEntryDTO from '@modules/generalEntries/dtos/ICreateGeneralEntryDTO'
+import IFilterParamsDTO from '@modules/generalEntries/dtos/IFilterParamsDTO'
 
 class GeneralEntriesRepository implements IGeneralEntriesRepository {
   private ormRepository: Repository<GeneralEntry>
@@ -25,14 +26,31 @@ class GeneralEntriesRepository implements IGeneralEntriesRepository {
     return findEntry
   }
 
-  public async findAll(): Promise<GeneralEntry[] | undefined> {
-    const generalEntries = await this.ormRepository.find({
-      order: {
-        date: 'DESC',
-      },
-    })
+  public async findAll(
+    params: IFilterParamsDTO,
+  ): Promise<GeneralEntry[] | undefined> {
+    if (Object.keys(params).length === 0) {
+      const generalEntries = await this.ormRepository.find({
+        order: {
+          date: 'DESC',
+        },
+      })
+      return generalEntries
+    } else {
+      const generalEntries = await this.ormRepository.find({
+        order: {
+          date: 'DESC',
+        },
+        where: {
+          date: Between(
+            params.minDate || '2000-01-01',
+            params.maxDate || '2100-01-01',
+          ),
+        },
+      })
 
-    return generalEntries
+      return generalEntries
+    }
   }
 
   public async create({

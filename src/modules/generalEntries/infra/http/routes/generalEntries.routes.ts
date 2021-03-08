@@ -9,6 +9,8 @@ const generalEntriesController = new GeneralEntriesController()
 
 generalEntriesRouter.use(ensureAuthenticated)
 
+generalEntriesRouter.get('/', generalEntriesController.show)
+
 generalEntriesRouter.post('/', generalEntriesController.create)
 
 generalEntriesRouter.post(
