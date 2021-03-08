@@ -4,8 +4,10 @@ import ICreateGeneralEntryDTO from '@modules/generalEntries/dtos/ICreateGeneralE
 interface IGeneralEntriesRepository {
   findByDate(date: Date): Promise<GeneralEntry[] | undefined>
   findById(id: string): Promise<GeneralEntry | undefined>
+  findAll(): Promise<GeneralEntry[] | undefined>
   create(data: ICreateGeneralEntryDTO): Promise<GeneralEntry>
   update(data: GeneralEntry): Promise<void>
+  delete(data: GeneralEntry): Promise<void>
 }
 
 export default IGeneralEntriesRepository

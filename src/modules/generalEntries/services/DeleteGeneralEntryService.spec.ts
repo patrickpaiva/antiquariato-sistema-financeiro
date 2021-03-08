@@ -1,11 +1,20 @@
 import { v4 as uuid } from 'uuid'
 import FakeGeneralEntriesRepository from '../repositories/fakes/FakeGeneralEntriesRepository'
 import CreateGeneralEntryService from './CreateGeneralEntryService'
+import DeleteGeneralEntryService from './DeleteGeneralEntryService'
+import ListAllGeneralEntriesService from './ListAllGeneralEntriesService'
 
 describe('CreateGeneralEntry', () => {
-  it('should be able to create a new General Entry', async () => {
+  it('should be able to delete a General Entry', async () => {
     const fakeGeneralEntriesRepository = new FakeGeneralEntriesRepository()
     const createGeneralEntry = new CreateGeneralEntryService(
+      fakeGeneralEntriesRepository,
+    )
+    const deleteGeneralEntry = new DeleteGeneralEntryService(
+      fakeGeneralEntriesRepository,
+    )
+
+    const listAllGeneralEntries = new ListAllGeneralEntriesService(
       fakeGeneralEntriesRepository,
     )
 
@@ -23,9 +32,13 @@ describe('CreateGeneralEntry', () => {
       authorized_by: uuid(),
     }
 
-    const generalEntry = await createGeneralEntry.execute(data)
+    const firstEntry = await createGeneralEntry.execute(data)
+    await createGeneralEntry.execute(data)
 
-    expect(generalEntry).toHaveProperty('id')
-    expect(generalEntry.value).toBe(5000)
+    await deleteGeneralEntry.execute(firstEntry.id)
+
+    const generalEntriesList = await listAllGeneralEntries.execute()
+
+    expect(generalEntriesList).toHaveLength(1)
   })
 })

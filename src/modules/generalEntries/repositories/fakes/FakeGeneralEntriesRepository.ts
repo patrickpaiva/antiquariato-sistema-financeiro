@@ -1,4 +1,4 @@
-import { uuid } from 'uuidv4'
+import { v4 as uuid } from 'uuid'
 
 import GeneralEntry from '@modules/generalEntries/infra/typeorm/entities/GeneralEntry'
 
@@ -22,6 +22,10 @@ class GeneralEntriesRepository implements IGeneralEntriesRepository {
     )
 
     return findGeneralEntry
+  }
+
+  public async findAll(): Promise<GeneralEntry[] | undefined> {
+    return this.generalEntries
   }
 
   public async create({
@@ -53,19 +57,6 @@ class GeneralEntriesRepository implements IGeneralEntriesRepository {
       created_by,
       authorized_by,
     })
-    // generalEntry.id = uuid()
-    // generalEntry.date = date
-    // generalEntry.description = description
-    // generalEntry.value = value
-    // generalEntry.type = type
-    // generalEntry.status = status
-    // generalEntry.cost_center = cost_center
-    // generalEntry.presentation_rubric = presentation_rubric
-    // generalEntry.specific_rubric = specific_rubric
-    // generalEntry.statement_id = statement_id || ''
-    // generalEntry.created_by = created_by
-    // generalEntry.authorized_by = authorized_by || ''
-
     this.generalEntries.push(generalEntry)
 
     return generalEntry
@@ -77,6 +68,14 @@ class GeneralEntriesRepository implements IGeneralEntriesRepository {
     )
 
     filteredGeneralEntries.push(generalEntry)
+
+    this.generalEntries = filteredGeneralEntries
+  }
+
+  public async delete(generalEntry: GeneralEntry): Promise<void> {
+    const filteredGeneralEntries = this.generalEntries.filter(
+      item => item.id !== generalEntry.id,
+    )
 
     this.generalEntries = filteredGeneralEntries
   }

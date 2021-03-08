@@ -25,6 +25,16 @@ class GeneralEntriesRepository implements IGeneralEntriesRepository {
     return findEntry
   }
 
+  public async findAll(): Promise<GeneralEntry[] | undefined> {
+    const generalEntries = await this.ormRepository.find({
+      order: {
+        date: 'DESC',
+      },
+    })
+
+    return generalEntries
+  }
+
   public async create({
     date,
     description,
@@ -59,6 +69,10 @@ class GeneralEntriesRepository implements IGeneralEntriesRepository {
 
   public async update(generalEntry: GeneralEntry): Promise<void> {
     await this.ormRepository.save(generalEntry)
+  }
+
+  public async delete(generalEntry: GeneralEntry): Promise<void> {
+    await this.ormRepository.remove(generalEntry)
   }
 }
 
