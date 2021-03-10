@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 import { container } from 'tsyringe'
 
 import CreateStatementService from '@modules/statements/services/CreateStatementService'
+import ListStatementsService from '@modules/statements/services/ListStatementsService'
 
 export default class StatementsController {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -30,5 +31,13 @@ export default class StatementsController {
     })
 
     return response.json(statement)
+  }
+
+  public async show(request: Request, response: Response): Promise<Response> {
+    const listStatements = container.resolve(ListStatementsService)
+
+    const statements = await listStatements.execute(request.body)
+
+    return response.json(statements)
   }
 }

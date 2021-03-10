@@ -1,8 +1,9 @@
 import Statement from '@modules/statements/infra/typeorm/entities/Statement'
-import { getRepository, Repository } from 'typeorm'
+import { Between, Equal, getRepository, IsNull, Not, Repository } from 'typeorm'
 
 import IStatementRepository from '@modules/statements/repositories/IStatementsRepository'
 import ICreateStatementDTO from '@modules/statements/dtos/ICreateStatementDTO'
+import IFilterStatementsParamsDTO from '@modules/statements/dtos/IFilterStatementsParamsDTO'
 
 class StatementsRepository implements IStatementRepository {
   private ormRepository: Repository<Statement>
@@ -19,6 +20,34 @@ class StatementsRepository implements IStatementRepository {
     }
 
     return findStatement
+  }
+
+  public async findAll(
+    params: IFilterStatementsParamsDTO,
+  ): Promise<Statement[] | undefined> {
+    if (Object.keys(params).length === 0) {
+      const statements = await this.ormRepository.find({
+        order: {
+          date: 'DESC',
+        },
+      })
+      return statements
+    } else {
+      const statements = await this.ormRepository.find({
+        date:
+          params.minDate && params.maxDate
+            ? Between(params.minDate, params.maxDate)
+            : Not(IsNull()),
+        value:
+          params.minValue && params.maxValue
+            ? Between(params.minValue, params.maxValue)
+            : Not(IsNull()),
+        transaction_type:
+          params.transaction_type && Equal(params.transaction_type),
+      })
+
+      return statements
+    }
   }
 
   public async create({

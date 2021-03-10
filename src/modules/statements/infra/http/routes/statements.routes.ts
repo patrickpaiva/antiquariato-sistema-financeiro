@@ -8,6 +8,7 @@ const statementsController = new StatementsController()
 
 statementsRouter.use(ensureAuthenticated)
 
+statementsRouter.get('/', statementsController.show)
 statementsRouter.post('/', statementsController.create)
 
 export default statementsRouter
