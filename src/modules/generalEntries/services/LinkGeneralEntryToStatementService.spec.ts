@@ -66,6 +66,48 @@ describe('LinkGeneralEntryToStatement', () => {
     expect(newGeneralEntry.statement_id).toBe(newStatement.id)
     expect(newStatement.entry_id).toBe(newGeneralEntry.id)
   })
+  it('should not be able to link a General Entry with invalid Id to a Statement', async () => {
+    const newStatement = await createStatementsService.execute({
+      date: new Date('2020-12-30'),
+      bank_id: 104,
+      account_id: 200375,
+      transaction_type: 'DEBIT',
+      value: 1300,
+      transaction_history: '33',
+      transaction_method: 'BOLETO',
+      entry_id: null,
+      created_by: 'd1bf7c2b-657f-49f0-9694-065ba997be9b',
+    })
+
+    await expect(
+      linkGeneralEntryToStatement.execute({
+        id: 'd1bf7c2b-657f-49f0-9694-065ba997be9b',
+        statement_id: newStatement.id,
+      }),
+    ).rejects.toBeInstanceOf(AppError)
+  })
+  it('should not be able to link a General Entry to a Statement with invalid Id', async () => {
+    const newGeneralEntry = await createGeneralEntryService.execute({
+      date: new Date('2020-12-30'),
+      description: 'Descricao padrao GE',
+      value: 1300,
+      type: 'DEBIT',
+      status: 'PAID',
+      cost_center: 'DIRETORIA',
+      presentation_rubric: 'Despesas Diretoria',
+      specific_rubric: 'Remunerações',
+      statement_id: null,
+      created_by: 'd1bf7c2b-657f-49f0-9694-065ba997be9b',
+      authorized_by: 'd1bf7c2b-657f-49f0-9694-065ba997be9b',
+    })
+
+    await expect(
+      linkGeneralEntryToStatement.execute({
+        id: newGeneralEntry.id,
+        statement_id: 'd1bf7c2b-657f-49f0-9694-065ba997be9b',
+      }),
+    ).rejects.toBeInstanceOf(AppError)
+  })
   it('should not be able to link a General Entry to a Statement with different dates', async () => {
     const newGeneralEntry = await createGeneralEntryService.execute({
       date: new Date('2020-12-31'),
@@ -96,6 +138,127 @@ describe('LinkGeneralEntryToStatement', () => {
     await expect(
       linkGeneralEntryToStatement.execute({
         id: newGeneralEntry.id,
+        statement_id: newStatement.id,
+      }),
+    ).rejects.toBeInstanceOf(AppError)
+  })
+  it('should not be able to link a General Entry to a Statement with different values', async () => {
+    const newGeneralEntry = await createGeneralEntryService.execute({
+      date: new Date('2020-12-30'),
+      description: 'Descricao padrao GE',
+      value: 1400,
+      type: 'DEBIT',
+      status: 'PAID',
+      cost_center: 'DIRETORIA',
+      presentation_rubric: 'Despesas Diretoria',
+      specific_rubric: 'Remunerações',
+      statement_id: null,
+      created_by: 'd1bf7c2b-657f-49f0-9694-065ba997be9b',
+      authorized_by: 'd1bf7c2b-657f-49f0-9694-065ba997be9b',
+    })
+
+    const newStatement = await createStatementsService.execute({
+      date: new Date('2020-12-30'),
+      bank_id: 104,
+      account_id: 200375,
+      transaction_type: 'DEBIT',
+      value: 1300,
+      transaction_history: '33',
+      transaction_method: 'BOLETO',
+      entry_id: null,
+      created_by: 'd1bf7c2b-657f-49f0-9694-065ba997be9b',
+    })
+
+    await expect(
+      linkGeneralEntryToStatement.execute({
+        id: newGeneralEntry.id,
+        statement_id: newStatement.id,
+      }),
+    ).rejects.toBeInstanceOf(AppError)
+  })
+  it('should not be able to link a General Entry to a Statement with different types', async () => {
+    const newGeneralEntry = await createGeneralEntryService.execute({
+      date: new Date('2020-12-31'),
+      description: 'Descricao padrao GE',
+      value: 1300,
+      type: 'CREDIT',
+      status: 'PAID',
+      cost_center: 'DIRETORIA',
+      presentation_rubric: 'Despesas Diretoria',
+      specific_rubric: 'Remunerações',
+      statement_id: null,
+      created_by: 'd1bf7c2b-657f-49f0-9694-065ba997be9b',
+      authorized_by: 'd1bf7c2b-657f-49f0-9694-065ba997be9b',
+    })
+
+    const newStatement = await createStatementsService.execute({
+      date: new Date('2020-12-31'),
+      bank_id: 104,
+      account_id: 200375,
+      transaction_type: 'DEBIT',
+      value: 1300,
+      transaction_history: '33',
+      transaction_method: 'BOLETO',
+      entry_id: null,
+      created_by: 'd1bf7c2b-657f-49f0-9694-065ba997be9b',
+    })
+
+    await expect(
+      linkGeneralEntryToStatement.execute({
+        id: newGeneralEntry.id,
+        statement_id: newStatement.id,
+      }),
+    ).rejects.toBeInstanceOf(AppError)
+  })
+  it('should not be able to link a General Entry to a Statement when one is already Linked', async () => {
+    const newGeneralEntry = await createGeneralEntryService.execute({
+      date: new Date('2020-12-31'),
+      description: 'Descricao padrao GE',
+      value: 1300,
+      type: 'DEBIT',
+      status: 'PAID',
+      cost_center: 'DIRETORIA',
+      presentation_rubric: 'Despesas Diretoria',
+      specific_rubric: 'Remunerações',
+      statement_id: null,
+      created_by: 'd1bf7c2b-657f-49f0-9694-065ba997be9b',
+      authorized_by: 'd1bf7c2b-657f-49f0-9694-065ba997be9b',
+    })
+
+    const newStatement = await createStatementsService.execute({
+      date: new Date('2020-12-31'),
+      bank_id: 104,
+      account_id: 200375,
+      transaction_type: 'DEBIT',
+      value: 1300,
+      transaction_history: '33',
+      transaction_method: 'BOLETO',
+      entry_id: null,
+      created_by: 'd1bf7c2b-657f-49f0-9694-065ba997be9b',
+    })
+
+    await linkGeneralEntryToStatement.execute({
+      id: newGeneralEntry.id,
+      statement_id: newStatement.id,
+    })
+
+    const anotherGeneralEntry = await createGeneralEntryService.execute({
+      date: new Date('2020-12-31'),
+      description: 'Descricao padrao GE',
+      value: 1300,
+      type: 'DEBIT',
+      status: 'PAID',
+      cost_center: 'DIRETORIA',
+      presentation_rubric: 'Despesas Diretoria',
+      specific_rubric: 'Remunerações',
+      statement_id: null,
+      created_by: 'd1bf7c2b-657f-49f0-9694-065ba997be9b',
+      authorized_by: 'd1bf7c2b-657f-49f0-9694-065ba997be9b',
+    })
+
+    await expect(
+      linkGeneralEntryToStatement.execute({
+        id: anotherGeneralEntry.id,
         statement_id: newStatement.id,
       }),
     ).rejects.toBeInstanceOf(AppError)
