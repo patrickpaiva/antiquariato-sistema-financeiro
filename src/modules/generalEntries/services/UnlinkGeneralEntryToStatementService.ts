@@ -41,8 +41,8 @@ class UnlinkGeneralEntryToStatementService {
       throw new AppError('Entry and Statement not currently connected')
     }
 
-    entry.statement_id = null
-    statement.entry_id = null
+    entry.statement_id = undefined
+    statement.entry_id = undefined
 
     await this.generalEntriesRepository.update(entry)
     await this.statementsRepository.save(statement)

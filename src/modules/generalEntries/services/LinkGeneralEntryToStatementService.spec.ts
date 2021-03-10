@@ -1,63 +1,103 @@
-import GeneralEntry from '@modules/generalEntries/infra/typeorm/entities/GeneralEntry'
-import { injectable, inject } from 'tsyringe'
-
-import IGeneralEntriesRepository from '@modules/generalEntries/repositories/IGeneralEntriesRepository'
-import IStatementsRepository from '@modules/statements/repositories/IStatementsRepository'
-
+import FakeStatementsRepository from '@modules/statements/repositories/fakes/FakeStatementsRepository'
+import CreateStatementService from '@modules/statements/services/CreateStatementService'
 import AppError from '@shared/errors/AppError'
+import FakeGeneralEntriesRepository from '../repositories/fakes/FakeGeneralEntriesRepository'
+import CreateGeneralEntryService from './CreateGeneralEntryService'
+import LinkGeneralEntryToStatementService from './LinkGeneralEntryToStatementService'
 
-interface Request {
-  id: string
-  statement_id: string
-}
+let fakeGeneralEntriesRepository: FakeGeneralEntriesRepository
+let fakeStatementsRepository: FakeStatementsRepository
+let createGeneralEntryService: CreateGeneralEntryService
+let createStatementsService: CreateStatementService
+let linkGeneralEntryToStatement: LinkGeneralEntryToStatementService
 
-@injectable()
-class LinkGeneralEntryToStatementService {
-  constructor(
-    @inject('GeneralEntriesRepository')
-    private generalEntriesRepository: IGeneralEntriesRepository,
+describe('LinkGeneralEntryToStatement', () => {
+  beforeEach(() => {
+    fakeGeneralEntriesRepository = new FakeGeneralEntriesRepository()
+    fakeStatementsRepository = new FakeStatementsRepository()
 
-    @inject('StatementsRepository')
-    private statementsRepository: IStatementsRepository,
-  ) {}
+    createGeneralEntryService = new CreateGeneralEntryService(
+      fakeGeneralEntriesRepository,
+    )
 
-  public async execute({ id, statement_id }: Request): Promise<GeneralEntry> {
-    const entry = await this.generalEntriesRepository.findById(id)
+    createStatementsService = new CreateStatementService(
+      fakeStatementsRepository,
+    )
 
-    if (!entry) {
-      throw new AppError('Entry not found')
-    }
+    linkGeneralEntryToStatement = new LinkGeneralEntryToStatementService(
+      fakeGeneralEntriesRepository,
+      fakeStatementsRepository,
+    )
+  })
+  it('should be able to link a General Entry to a Statement', async () => {
+    const newGeneralEntry = await createGeneralEntryService.execute({
+      date: new Date('2020-12-30'),
+      description: 'Descricao padrao GE',
+      value: 1300,
+      type: 'DEBIT',
+      status: 'PAID',
+      cost_center: 'DIRETORIA',
+      presentation_rubric: 'Despesas Diretoria',
+      specific_rubric: 'Remunerações',
+      statement_id: null,
+      created_by: 'd1bf7c2b-657f-49f0-9694-065ba997be9b',
+      authorized_by: 'd1bf7c2b-657f-49f0-9694-065ba997be9b',
+    })
 
-    const statement = await this.statementsRepository.findById(statement_id)
+    const newStatement = await createStatementsService.execute({
+      date: new Date('2020-12-30'),
+      bank_id: 104,
+      account_id: 200375,
+      transaction_type: 'DEBIT',
+      value: 1300,
+      transaction_history: '33',
+      transaction_method: 'BOLETO',
+      entry_id: null,
+      created_by: 'd1bf7c2b-657f-49f0-9694-065ba997be9b',
+    })
 
-    if (!statement) {
-      throw new AppError('Statement not found')
-    }
+    await linkGeneralEntryToStatement.execute({
+      id: newGeneralEntry.id,
+      statement_id: newStatement.id,
+    })
 
-    if (statement.entry_id !== null || entry.statement_id !== null) {
-      throw new AppError('Statement or entry already linked')
-    }
+    expect(newGeneralEntry).toHaveProperty('statement_id')
+    expect(newStatement).toHaveProperty('entry_id')
+    expect(newGeneralEntry.statement_id).toBe(newStatement.id)
+    expect(newStatement.entry_id).toBe(newGeneralEntry.id)
+  })
+  it('should not be able to link a General Entry to a Statement with different dates', async () => {
+    const newGeneralEntry = await createGeneralEntryService.execute({
+      date: new Date('2020-12-31'),
+      description: 'Descricao padrao GE',
+      value: 1300,
+      type: 'DEBIT',
+      status: 'PAID',
+      cost_center: 'DIRETORIA',
+      presentation_rubric: 'Despesas Diretoria',
+      specific_rubric: 'Remunerações',
+      statement_id: null,
+      created_by: 'd1bf7c2b-657f-49f0-9694-065ba997be9b',
+      authorized_by: 'd1bf7c2b-657f-49f0-9694-065ba997be9b',
+    })
 
-    if (statement.date !== entry.date) {
-      throw new AppError('Date does not match, please check your request')
-    }
+    const newStatement = await createStatementsService.execute({
+      date: new Date('2020-12-30'),
+      bank_id: 104,
+      account_id: 200375,
+      transaction_type: 'DEBIT',
+      value: 1300,
+      transaction_history: '33',
+      transaction_method: 'BOLETO',
+      entry_id: null,
+      created_by: 'd1bf7c2b-657f-49f0-9694-065ba997be9b',
+    })
 
-    if (statement.transaction_type !== entry.type) {
-      throw new AppError('Type does not match, please check your request')
-    }
-
-    if (statement.value !== entry.value) {
-      throw new AppError('Value does not match, please check your request')
-    }
-
-    entry.statement_id = statement_id
-    statement.entry_id = id
-
-    await this.generalEntriesRepository.update(entry)
-    await this.statementsRepository.save(statement)
-
-    return entry
-  }
-}
-
-export default LinkGeneralEntryToStatementService
+    await expect(
+      linkGeneralEntryToStatement.execute({
+        id: newGeneralEntry.id,
+        statement_id: newStatement.id,
+      }),
+    ).rejects.toBeInstanceOf(AppError)
+  })
+})

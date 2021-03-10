@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for users/services/AuthenticateUserService.ts</title>
+    <title>Code coverage report for generalEntries/services/UnlinkGeneralEntryToStatementService.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,20 +19,20 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">users/services</a> AuthenticateUserService.ts</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">generalEntries/services</a> UnlinkGeneralEntryToStatementService.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/23</span>
+                <span class='fraction'>0/26</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/5</span>
+                <span class='fraction'>0/9</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/18</span>
+                <span class='fraction'>0/21</span>
             </div>
         
             
@@ -111,18 +111,13 @@
 <a name='L52'></a><a href='#L52'>52</a>
 <a name='L53'></a><a href='#L53'>53</a>
 <a name='L54'></a><a href='#L54'>54</a>
-<a name='L55'></a><a href='#L55'>55</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L55'></a><a href='#L55'>55</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -130,7 +125,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -156,69 +151,74 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import { compare } from 'bcryptjs'</span>
-<span class="cstat-no" title="statement not covered" >import { sign } from 'jsonwebtoken'</span>
-<span class="cstat-no" title="statement not covered" >import authConfig from '@config/auth'</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import GeneralEntry from '@modules/generalEntries/infra/typeorm/entities/GeneralEntry'
 <span class="cstat-no" title="statement not covered" >import { injectable, inject } from 'tsyringe'</span>
 &nbsp;
-import IUsersRepository from '../repositories/IUsersRepository'
+import IGeneralEntriesRepository from '@modules/generalEntries/repositories/IGeneralEntriesRepository'
+import IStatementsRepository from '@modules/statements/repositories/IStatementsRepository'
 &nbsp;
 <span class="cstat-no" title="statement not covered" >import AppError from '@shared/errors/AppError'</span>
 &nbsp;
-import User from '@modules/users/infra/typeorm/entities/User'
-&nbsp;
-interface IRequest {
-  email: string
-  password: string
-}
-&nbsp;
-interface IResponse {
-  user: User
-  token: string
+interface Request {
+  id: string
+  statement_id: string
 }
 &nbsp;
 @injectable()
-<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >class <span class="cstat-no" title="statement not covered" >A</span></span>uthenticateUserService {</span>
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >class <span class="cstat-no" title="statement not covered" >U</span></span>nlinkGeneralEntryToStatementService {</span>
 <span class="fstat-no" title="function not covered" >  constructor(</span>
-    @inject('UsersRepository')
-    private <span class="cstat-no" title="statement not covered" >usersRepository: IUsersRepository,</span>
+    @inject('GeneralEntriesRepository')
+    private <span class="cstat-no" title="statement not covered" >generalEntriesRepository: IGeneralEntriesRepository,</span>
+&nbsp;
+    @inject('StatementsRepository')
+    private <span class="cstat-no" title="statement not covered" >statementsRepository: IStatementsRepository,</span>
   ) {}
 &nbsp;
-<span class="fstat-no" title="function not covered" >  public async <span class="cstat-no" title="statement not covered" >e</span>xecute({ email<span class="cstat-no" title="statement not covered" >, p</span>assword<span class="cstat-no" title="statement not covered" > }: IRequest)</span>: Promise&lt;IResponse&gt; {</span>
-    const <span class="cstat-no" title="statement not covered" >user = <span class="cstat-no" title="statement not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >await this.usersRepository.findByEmail(email)</span></span></span>
+<span class="fstat-no" title="function not covered" >  public async <span class="cstat-no" title="statement not covered" >e</span>xecute({ id<span class="cstat-no" title="statement not covered" >, s</span>tatement_id<span class="cstat-no" title="statement not covered" > }: Request)</span>: Promise&lt;GeneralEntry&gt; {</span>
+    const <span class="cstat-no" title="statement not covered" >entry = <span class="cstat-no" title="statement not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >await this.generalEntriesRepository.findById(id)</span></span></span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    if (!user) {</span>
-<span class="cstat-no" title="statement not covered" >      throw new AppError('Incorrect email/password combination.', 401)</span>
+<span class="cstat-no" title="statement not covered" >    if (!entry) {</span>
+<span class="cstat-no" title="statement not covered" >      throw new AppError('Entry not found')</span>
     }
 &nbsp;
-    const <span class="cstat-no" title="statement not covered" >passwordMatch = <span class="cstat-no" title="statement not covered" >await compare(password, user.password)</span></span>
+    const <span class="cstat-no" title="statement not covered" >statement = <span class="cstat-no" title="statement not covered" >await this.statementsRepository.findById(statement_id)</span></span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    if (!passwordMatch) {</span>
-<span class="cstat-no" title="statement not covered" >      throw new AppError('Incorrect email/password combination.', 401)</span>
+<span class="cstat-no" title="statement not covered" >    if (!statement) {</span>
+<span class="cstat-no" title="statement not covered" >      throw new AppError('Statement not found')</span>
     }
 &nbsp;
-    const <span class="cstat-no" title="statement not covered" >token = sign({}, authConfig.jwt.secret, {</span>
-      subject: user.id,
-      expiresIn: authConfig.jwt.expiresIn,
-    })
-&nbsp;
-<span class="cstat-no" title="statement not covered" >    return {</span>
-      user,
-      token,
+<span class="cstat-no" title="statement not covered" >    if (</span>
+      entry.statement_id !== statement.id ||
+      statement.entry_id !== entry.id
+    ) {
+<span class="cstat-no" title="statement not covered" >      throw new AppError('Entry and Statement not currently connected')</span>
     }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    entry.statement_id = undefined</span>
+<span class="cstat-no" title="statement not covered" >    statement.entry_id = undefined</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    await this.generalEntriesRepository.update(entry)</span>
+<span class="cstat-no" title="statement not covered" >    await this.statementsRepository.save(statement)</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return entry</span>
   }
 <span class="cstat-no" title="statement not covered" >}</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >export default AuthenticateUserService</span>
+<span class="cstat-no" title="statement not covered" >export default UnlinkGeneralEntryToStatementService</span>
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->

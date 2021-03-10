@@ -10,6 +10,7 @@ interface IRequest {
   value: number
   transaction_history: string
   transaction_method: string
+  entry_id?: string | null
   created_by: string
 }
 

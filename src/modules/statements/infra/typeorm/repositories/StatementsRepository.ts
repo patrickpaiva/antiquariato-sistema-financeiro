@@ -1,9 +1,8 @@
-import Statement from '@modules/statements/infra/typeorm/entities/Statement'
-import { Between, Equal, getRepository, IsNull, Not, Repository } from 'typeorm'
-
-import IStatementRepository from '@modules/statements/repositories/IStatementsRepository'
 import ICreateStatementDTO from '@modules/statements/dtos/ICreateStatementDTO'
 import IFilterStatementsParamsDTO from '@modules/statements/dtos/IFilterStatementsParamsDTO'
+import Statement from '@modules/statements/infra/typeorm/entities/Statement'
+import IStatementRepository from '@modules/statements/repositories/IStatementsRepository'
+import { Between, Equal, getRepository, IsNull, Not, Repository } from 'typeorm'
 
 class StatementsRepository implements IStatementRepository {
   private ormRepository: Repository<Statement>
