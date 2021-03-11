@@ -13,6 +13,8 @@ generalEntriesRouter.get('/', generalEntriesController.show)
 
 generalEntriesRouter.post('/', generalEntriesController.create)
 
+generalEntriesRouter.put('/', generalEntriesController.update)
+
 generalEntriesRouter.post(
   '/link_statement',
   generalEntriesController.linkStatement,

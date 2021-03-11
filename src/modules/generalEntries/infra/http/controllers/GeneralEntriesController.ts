@@ -5,6 +5,7 @@ import CreateGeneralEntryService from '@modules/generalEntries/services/CreateGe
 import LinkGeneralEntryToStatementService from '@modules/generalEntries/services/LinkGeneralEntryToStatementService'
 import ListAllGeneralEntriesService from '@modules/generalEntries/services/ListAllGeneralEntriesService'
 import UnlinkGeneralEntryToStatementService from '@modules/generalEntries/services/UnlinkGeneralEntryToStatementService'
+import UpdateGeneralEntryService from '@modules/generalEntries/services/UpdateGeneralEntryService'
 
 export default class GeneralEntriesController {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -81,5 +82,13 @@ export default class GeneralEntriesController {
     const generalEntries = await listGeneralEntries.execute(request.body)
 
     return response.json(generalEntries)
+  }
+
+  public async update(request: Request, response: Response): Promise<Response> {
+    const updateGeneralEntries = container.resolve(UpdateGeneralEntryService)
+
+    await updateGeneralEntries.execute(request.body)
+
+    return response.json({ message: 'Updated Successfully' })
   }
 }
