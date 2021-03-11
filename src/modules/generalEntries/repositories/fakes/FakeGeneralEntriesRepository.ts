@@ -62,7 +62,7 @@ class GeneralEntriesRepository implements IGeneralEntriesRepository {
     return generalEntry
   }
 
-  public async update(generalEntry: GeneralEntry): Promise<void> {
+  public async update(generalEntry: GeneralEntry): Promise<GeneralEntry> {
     const filteredGeneralEntries = this.generalEntries.filter(
       item => item.id !== generalEntry.id,
     )
@@ -70,6 +70,8 @@ class GeneralEntriesRepository implements IGeneralEntriesRepository {
     filteredGeneralEntries.push(generalEntry)
 
     this.generalEntries = filteredGeneralEntries
+
+    return generalEntry
   }
 
   public async delete(generalEntry: GeneralEntry): Promise<void> {

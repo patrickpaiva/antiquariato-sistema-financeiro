@@ -7,7 +7,7 @@ interface IGeneralEntriesRepository {
   findById(id: string): Promise<GeneralEntry | undefined>
   findAll(params?: IFilterParamsDTO): Promise<GeneralEntry[] | undefined>
   create(data: ICreateGeneralEntryDTO): Promise<GeneralEntry>
-  update(data: GeneralEntry): Promise<void>
+  update(data: GeneralEntry): Promise<GeneralEntry>
   delete(data: GeneralEntry): Promise<void>
 }
 

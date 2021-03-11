@@ -83,8 +83,10 @@ class GeneralEntriesRepository implements IGeneralEntriesRepository {
     return generalEntry
   }
 
-  public async update(generalEntry: GeneralEntry): Promise<void> {
+  public async update(generalEntry: GeneralEntry): Promise<GeneralEntry> {
     await this.ormRepository.save(generalEntry)
+
+    return generalEntry
   }
 
   public async delete(generalEntry: GeneralEntry): Promise<void> {

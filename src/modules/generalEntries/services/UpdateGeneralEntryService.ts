@@ -1,5 +1,6 @@
 import IGeneralEntriesRepository from '@modules/generalEntries/repositories/IGeneralEntriesRepository'
 import { inject, injectable } from 'tsyringe'
+import GeneralEntry from '../infra/typeorm/entities/GeneralEntry'
 
 interface IRequest {
   id: string
@@ -21,7 +22,7 @@ class UpdateGeneralEntryService {
     private generalEntriesRepository: IGeneralEntriesRepository,
   ) {}
 
-  public async execute({ id, ...params }: IRequest): Promise<void> {
+  public async execute({ id, ...params }: IRequest): Promise<GeneralEntry> {
     const findEntry = await this.generalEntriesRepository.findById(id)
 
     if (!findEntry) {
@@ -33,7 +34,11 @@ class UpdateGeneralEntryService {
       ...params,
     }
 
-    await this.generalEntriesRepository.update(updatedEntry)
+    const updatedGeneralEntry = await this.generalEntriesRepository.update(
+      updatedEntry,
+    )
+
+    return updatedGeneralEntry
   }
 }
 
