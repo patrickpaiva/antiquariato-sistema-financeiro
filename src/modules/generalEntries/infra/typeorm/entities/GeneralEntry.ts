@@ -40,7 +40,7 @@ class GeneralEntry {
   specific_rubric: string
 
   @Column({ nullable: true })
-  statement_id?: string
+  statement_id?: string | null
 
   @OneToOne(() => Statement, statement => statement.entry_id)
   @JoinColumn({ name: 'statement_id' })
