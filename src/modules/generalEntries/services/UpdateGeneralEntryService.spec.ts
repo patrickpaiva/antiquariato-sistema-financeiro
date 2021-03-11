@@ -107,4 +107,25 @@ describe('UpdateGeneralEntry', () => {
       updateGeneralEntry.execute(updatedGeneralEntryData),
     ).rejects.toBeInstanceOf(AppError)
   })
+  it('should not be able to update a General Entry with invalid id or that does not exist', async () => {
+    const newUuid = uuid()
+    const newDate = new Date()
+
+    const updatedGeneralEntryData = {
+      id: uuid(),
+      date: newDate,
+      description: 'Descrição de Teste 2',
+      value: 50000,
+      type: 'Tipo Teste 2',
+      status: 'Pago',
+      cost_center: 'Centro de custo de teste 2',
+      presentation_rubric: 'Rubrica de Apresentação de teste 2',
+      specific_rubric: 'Rubrica Especifica de Teste 2',
+      authorized_by: newUuid,
+    }
+
+    await expect(
+      updateGeneralEntry.execute(updatedGeneralEntryData),
+    ).rejects.toBeInstanceOf(AppError)
+  })
 })
