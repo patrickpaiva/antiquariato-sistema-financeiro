@@ -15,6 +15,8 @@ generalEntriesRouter.post('/', generalEntriesController.create)
 
 generalEntriesRouter.put('/', generalEntriesController.update)
 
+generalEntriesRouter.delete('/', generalEntriesController.delete)
+
 generalEntriesRouter.post(
   '/link_statement',
   generalEntriesController.linkStatement,

@@ -52,14 +52,14 @@ class GeneralEntry {
   @Column()
   authorized_by: string
 
-  @Column({ nullable: true })
-  deleted: boolean | null
+  @Column()
+  deleted: boolean
 
-  @Column({ nullable: true })
-  deleted_by: string | null
+  @Column()
+  deleted_by: string
 
-  @Column({ nullable: true })
-  deleted_date: Date | null
+  @Column()
+  deleted_date: Date
 
   @CreateDateColumn()
   created_at: Date

@@ -6,6 +6,7 @@ import LinkGeneralEntryToStatementService from '@modules/generalEntries/services
 import ListAllGeneralEntriesService from '@modules/generalEntries/services/ListAllGeneralEntriesService'
 import UnlinkGeneralEntryToStatementService from '@modules/generalEntries/services/UnlinkGeneralEntryToStatementService'
 import UpdateGeneralEntryService from '@modules/generalEntries/services/UpdateGeneralEntryService'
+import DeleteGeneralEntryService from '@modules/generalEntries/services/DeleteGeneralEntryService'
 
 export default class GeneralEntriesController {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -90,5 +91,13 @@ export default class GeneralEntriesController {
     await updateGeneralEntries.execute(request.body)
 
     return response.json({ message: 'Updated Successfully' })
+  }
+
+  public async delete(request: Request, response: Response): Promise<Response> {
+    const deleteGeneralEntries = container.resolve(DeleteGeneralEntryService)
+
+    await deleteGeneralEntries.execute(request.body)
+
+    return response.json({ message: 'Deleted Successfully' })
   }
 }

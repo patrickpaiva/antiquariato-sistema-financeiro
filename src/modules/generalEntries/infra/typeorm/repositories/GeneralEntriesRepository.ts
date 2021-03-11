@@ -88,10 +88,6 @@ class GeneralEntriesRepository implements IGeneralEntriesRepository {
 
     return generalEntry
   }
-
-  public async delete(generalEntry: GeneralEntry): Promise<void> {
-    await this.ormRepository.remove(generalEntry)
-  }
 }
 
 export default GeneralEntriesRepository
