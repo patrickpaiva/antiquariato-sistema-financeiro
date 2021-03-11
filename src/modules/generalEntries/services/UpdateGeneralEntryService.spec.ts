@@ -1,3 +1,4 @@
+import AppError from '@shared/errors/AppError'
 import { v4 as uuid } from 'uuid'
 import FakeGeneralEntriesRepository from '../repositories/fakes/FakeGeneralEntriesRepository'
 import CreateGeneralEntryService from './CreateGeneralEntryService'
@@ -16,7 +17,7 @@ describe('UpdateGeneralEntry', () => {
       fakeGeneralEntriesRepository,
     )
   })
-  it('should be able to create a new General Entry', async () => {
+  it('should be able to update a General Entry', async () => {
     const newGeneralEntry = {
       date: new Date(),
       description: 'Descrição de Teste',
@@ -26,7 +27,6 @@ describe('UpdateGeneralEntry', () => {
       cost_center: 'Centro de custo de teste',
       presentation_rubric: 'Rubrica de Apresentação de teste',
       specific_rubric: 'Rubrica Especifica de Teste',
-      statement_id: uuid(),
       created_by: uuid(),
       authorized_by: uuid(),
     }
@@ -67,5 +67,44 @@ describe('UpdateGeneralEntry', () => {
       'Rubrica Especifica de Teste 2',
     )
     expect(updatedGeneralEntry.authorized_by).toBe(newUuid)
+  })
+  it('should not be able to update a General Entry that is linked to a statement', async () => {
+    const statementUuid = uuid()
+
+    const newGeneralEntry = {
+      date: new Date(),
+      description: 'Descrição de Teste',
+      value: 5000,
+      type: 'Tipo Teste',
+      status: 'A Pagar',
+      cost_center: 'Centro de custo de teste',
+      presentation_rubric: 'Rubrica de Apresentação de teste',
+      specific_rubric: 'Rubrica Especifica de Teste',
+      statement_id: statementUuid,
+      created_by: uuid(),
+      authorized_by: uuid(),
+    }
+
+    const generalEntry = await createGeneralEntry.execute(newGeneralEntry)
+
+    const newUuid = uuid()
+    const newDate = new Date()
+
+    const updatedGeneralEntryData = {
+      id: generalEntry.id,
+      date: newDate,
+      description: 'Descrição de Teste 2',
+      value: 50000,
+      type: 'Tipo Teste 2',
+      status: 'Pago',
+      cost_center: 'Centro de custo de teste 2',
+      presentation_rubric: 'Rubrica de Apresentação de teste 2',
+      specific_rubric: 'Rubrica Especifica de Teste 2',
+      authorized_by: newUuid,
+    }
+
+    await expect(
+      updateGeneralEntry.execute(updatedGeneralEntryData),
+    ).rejects.toBeInstanceOf(AppError)
   })
 })

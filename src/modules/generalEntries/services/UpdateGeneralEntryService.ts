@@ -1,6 +1,8 @@
 import IGeneralEntriesRepository from '@modules/generalEntries/repositories/IGeneralEntriesRepository'
 import { inject, injectable } from 'tsyringe'
 import GeneralEntry from '../infra/typeorm/entities/GeneralEntry'
+import { validate } from 'uuid'
+import AppError from '@shared/errors/AppError'
 
 interface IRequest {
   id: string
@@ -26,7 +28,13 @@ class UpdateGeneralEntryService {
     const findEntry = await this.generalEntriesRepository.findById(id)
 
     if (!findEntry) {
-      throw new Error('General Entry not found')
+      throw new AppError('General Entry not found')
+    }
+
+    if (findEntry.statement_id && validate(findEntry.statement_id)) {
+      throw new AppError(
+        'Cannot update a General Entry which is already linked to a statement',
+      )
     }
 
     const updatedEntry = {
