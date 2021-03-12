@@ -46,6 +46,9 @@ class Statement {
   @Column()
   created_by: string
 
+  @Column()
+  created_manually: boolean
+
   @OneToOne(() => User)
   @JoinColumn({ name: 'created_by' })
   user: User

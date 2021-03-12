@@ -40,6 +40,7 @@ class CreateStatementService {
       transaction_history,
       transaction_method,
       created_by,
+      created_manually: true,
     })
 
     return statement

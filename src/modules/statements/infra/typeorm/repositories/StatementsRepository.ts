@@ -58,6 +58,7 @@ class StatementsRepository implements IStatementRepository {
     transaction_history,
     transaction_method,
     created_by,
+    created_manually,
   }: ICreateStatementDTO): Promise<Statement> {
     const statement = await this.ormRepository.create({
       date,
@@ -68,6 +69,7 @@ class StatementsRepository implements IStatementRepository {
       transaction_history,
       transaction_method,
       created_by,
+      created_manually,
     })
 
     await this.ormRepository.save(statement)

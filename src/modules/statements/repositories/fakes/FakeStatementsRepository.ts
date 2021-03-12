@@ -59,6 +59,7 @@ class StatementsRepository implements IStatementRepository {
     transaction_history,
     transaction_method,
     created_by,
+    created_manually,
   }: ICreateStatementDTO): Promise<Statement> {
     const statement = new Statement()
 
@@ -72,6 +73,7 @@ class StatementsRepository implements IStatementRepository {
       transaction_history,
       transaction_method,
       created_by,
+      created_manually,
     })
 
     this.statements.push(statement)
