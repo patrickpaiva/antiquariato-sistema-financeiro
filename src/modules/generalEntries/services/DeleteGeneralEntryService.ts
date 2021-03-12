@@ -2,7 +2,7 @@ import IGeneralEntriesRepository from '@modules/generalEntries/repositories/IGen
 import IUsersRepository from '@modules/users/repositories/IUsersRepository'
 import AppError from '@shared/errors/AppError'
 import { inject, injectable } from 'tsyringe'
-import { validate } from 'uuid'
+// import { validate } from 'uuid'
 
 interface IRequest {
   generalEntryId: string
@@ -32,11 +32,11 @@ class DeleteGeneralEntryService {
       throw new AppError('General Entry not found', 404)
     }
 
-    if (findEntry.statement_id && validate(findEntry.statement_id)) {
-      throw new AppError(
-        'Cannot delete a general entry which is linked to a statement',
-      )
-    }
+    // if (findEntry.statement_id && validate(findEntry.statement_id)) {
+    //   throw new AppError(
+    //     'Cannot delete a general entry which is linked to a statement',
+    //   )
+    // }
 
     const deletedEntry = {
       ...findEntry,
