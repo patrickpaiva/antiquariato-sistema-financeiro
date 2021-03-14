@@ -39,7 +39,7 @@ class GeneralEntry {
   @Column()
   specific_rubric: string
 
-  @Column({ nullable: true })
+  @Column({ type: 'text', nullable: true })
   statement_id?: string | null
 
   @OneToOne(() => Statement, statement => statement.entry_id)

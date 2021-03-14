@@ -37,8 +37,8 @@ class Statement {
   @Column()
   transaction_method: string
 
-  @Column({ nullable: true })
-  entry_id?: string
+  @Column({ type: 'text', nullable: true })
+  entry_id?: string | null
 
   @OneToOne(() => GeneralEntry, generalEntry => generalEntry.statement_id)
   generalEntry: GeneralEntry

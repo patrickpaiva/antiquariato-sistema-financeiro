@@ -1,11 +1,9 @@
 import GeneralEntry from '@modules/generalEntries/infra/typeorm/entities/GeneralEntry'
-import { injectable, inject } from 'tsyringe'
-import { compareAsc } from 'date-fns'
-
 import IGeneralEntriesRepository from '@modules/generalEntries/repositories/IGeneralEntriesRepository'
 import IStatementsRepository from '@modules/statements/repositories/IStatementsRepository'
-
 import AppError from '@shared/errors/AppError'
+import { compareAsc } from 'date-fns'
+import { inject, injectable } from 'tsyringe'
 
 interface Request {
   id: string
@@ -39,7 +37,7 @@ class LinkGeneralEntryToStatementService {
       throw new AppError('Statement or entry already linked')
     }
 
-    if (compareAsc(statement.date, entry.date) !== 0) {
+    if (compareAsc(new Date(statement.date), new Date(entry.date)) !== 0) {
       throw new AppError('Date does not match, please check your request')
     }
 
