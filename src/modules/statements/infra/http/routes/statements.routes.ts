@@ -10,6 +10,7 @@ statementsRouter.use(ensureAuthenticated)
 
 statementsRouter.get('/', statementsController.show)
 statementsRouter.post('/', statementsController.create)
+statementsRouter.put('/', statementsController.update)
 statementsRouter.delete('/', statementsController.delete)
 
 export default statementsRouter

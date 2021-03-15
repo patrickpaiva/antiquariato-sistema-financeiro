@@ -14,10 +14,6 @@ class StatementsRepository implements IStatementRepository {
   public async findById(id: string): Promise<Statement | undefined> {
     const findStatement = await this.ormRepository.findOne(id)
 
-    if (!findStatement) {
-      throw new Error('Statement not found')
-    }
-
     return findStatement
   }
 
