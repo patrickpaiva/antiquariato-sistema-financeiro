@@ -45,7 +45,7 @@ class UnlinkGeneralEntryToStatementService {
     statement.entry_id = null
 
     await this.generalEntriesRepository.update(entry)
-    await this.statementsRepository.save(statement)
+    await this.statementsRepository.update(statement)
 
     return entry
   }

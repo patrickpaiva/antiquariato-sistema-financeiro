@@ -4,7 +4,7 @@ import IFilterStatementsParamsDTO from '../dtos/IFilterStatementsParamsDTO'
 
 export default interface IStatementRepository {
   create(data: ICreateStatementDTO): Promise<Statement>
-  save(statement: Statement): Promise<Statement>
+  update(statement: Statement): Promise<Statement>
   findById(id: string): Promise<Statement | undefined>
   findAll(params: IFilterStatementsParamsDTO): Promise<Statement[] | undefined>
 }

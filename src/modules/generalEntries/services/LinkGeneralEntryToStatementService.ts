@@ -57,7 +57,7 @@ class LinkGeneralEntryToStatementService {
     statement.entry_id = id
 
     await this.generalEntriesRepository.update(entry)
-    await this.statementsRepository.save(statement)
+    await this.statementsRepository.update(statement)
 
     return entry
   }
