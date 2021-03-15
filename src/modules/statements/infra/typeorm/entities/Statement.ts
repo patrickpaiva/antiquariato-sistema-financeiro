@@ -53,6 +53,15 @@ class Statement {
   @JoinColumn({ name: 'created_by' })
   user: User
 
+  @Column()
+  deleted: boolean
+
+  @Column()
+  deleted_by: string
+
+  @Column()
+  deleted_date: Date
+
   @CreateDateColumn()
   created_at: Date
 
