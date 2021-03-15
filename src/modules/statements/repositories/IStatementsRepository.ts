@@ -6,5 +6,5 @@ export default interface IStatementRepository {
   create(data: ICreateStatementDTO): Promise<Statement>
   update(statement: Statement): Promise<Statement>
   findById(id: string): Promise<Statement | undefined>
-  findAll(params: IFilterStatementsParamsDTO): Promise<Statement[] | undefined>
+  findAll(params?: IFilterStatementsParamsDTO): Promise<Statement[] | undefined>
 }

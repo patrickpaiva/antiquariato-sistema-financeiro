@@ -3,6 +3,7 @@ import { container } from 'tsyringe'
 
 import CreateStatementService from '@modules/statements/services/CreateStatementService'
 import ListStatementsService from '@modules/statements/services/ListStatementsService'
+import DeleteStatementService from '@modules/statements/services/DeleteStatementService'
 
 export default class StatementsController {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -39,5 +40,13 @@ export default class StatementsController {
     const statements = await listStatements.execute(request.body)
 
     return response.json(statements)
+  }
+
+  public async delete(request: Request, response: Response): Promise<Response> {
+    const deleteStatement = container.resolve(DeleteStatementService)
+
+    await deleteStatement.execute(request.body)
+
+    return response.json({ message: 'Deleted Successfully' })
   }
 }

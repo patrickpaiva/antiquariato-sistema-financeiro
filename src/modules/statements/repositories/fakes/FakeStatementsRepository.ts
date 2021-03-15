@@ -14,40 +14,41 @@ class StatementsRepository implements IStatementRepository {
   }
 
   public async findAll({
-    minDate,
-    maxDate,
-    maxValue,
-    minValue,
-    transaction_type,
+    ...params
   }: IFilterStatementsParamsDTO): Promise<Statement[] | undefined> {
-    if (!minDate || !maxDate || !maxValue || !minValue || !transaction_type) {
+    // return this.statements
+    if (Object.keys(params).length === 0) {
       return this.statements
+    } else {
+      const filteredStatements: Statement[] = []
+
+      if (params.minDate && params.maxDate) {
+        const statements = this.statements.filter(
+          statement =>
+            statement.date >= (params.minDate || '') ||
+            statement.date <= (params.maxDate || ''),
+        )
+        filteredStatements.concat(statements)
+      }
+
+      if (params.minValue && params.maxValue) {
+        const statements = this.statements.filter(
+          statement =>
+            statement.value >= (params.minValue || '') ||
+            statement.value <= (params.maxValue || ''),
+        )
+        filteredStatements.concat(statements)
+      }
+
+      if (params.transaction_type) {
+        const statements = this.statements.filter(
+          statement => statement.transaction_type === params.transaction_type,
+        )
+        filteredStatements.concat(statements)
+      }
+
+      return filteredStatements
     }
-
-    const filteredStatements: Statement[] = []
-
-    if (minDate && maxDate) {
-      const statements = this.statements.filter(
-        statement => statement.date >= minDate || statement.date <= maxDate,
-      )
-      filteredStatements.concat(statements)
-    }
-
-    if (minValue && maxValue) {
-      const statements = this.statements.filter(
-        statement => statement.value >= minValue || statement.value <= maxValue,
-      )
-      filteredStatements.concat(statements)
-    }
-
-    if (transaction_type) {
-      const statements = this.statements.filter(
-        statement => statement.transaction_type === transaction_type,
-      )
-      filteredStatements.concat(statements)
-    }
-
-    return filteredStatements
   }
 
   public async create({
@@ -81,8 +82,15 @@ class StatementsRepository implements IStatementRepository {
     return statement
   }
 
-  public async save(statement: Statement): Promise<Statement> {
-    this.statements.push(statement)
+  public async update(statement: Statement): Promise<Statement> {
+    const filteredGeneralEntries = this.statements.filter(
+      item => item.id !== statement.id,
+    )
+
+    filteredGeneralEntries.push(statement)
+
+    this.statements = filteredGeneralEntries
+
     return statement
   }
 }

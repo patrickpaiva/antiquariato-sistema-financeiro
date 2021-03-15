@@ -12,9 +12,14 @@ class ListStatementsService {
   ) {}
 
   public async execute(
-    params: IFilterStatementsParamsDTO,
+    params?: IFilterStatementsParamsDTO,
   ): Promise<Statement[]> {
-    const statements = await this.statementsRepository.findAll(params)
+    let statements
+    if (params) {
+      statements = await this.statementsRepository.findAll(params)
+    } else {
+      statements = await this.statementsRepository.findAll()
+    }
 
     if (!statements) {
       throw new AppError('Could not load statements list')
