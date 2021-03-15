@@ -77,7 +77,7 @@ class StatementsRepository implements IStatementRepository {
     return statement
   }
 
-  public async save(statement: Statement): Promise<Statement> {
+  public async update(statement: Statement): Promise<Statement> {
     return this.ormRepository.save(statement)
   }
 }
