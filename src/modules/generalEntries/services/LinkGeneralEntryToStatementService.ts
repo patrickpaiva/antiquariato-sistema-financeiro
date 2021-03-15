@@ -37,6 +37,10 @@ class LinkGeneralEntryToStatementService {
       throw new AppError('Statement or entry already linked')
     }
 
+    if (entry.deleted) {
+      throw new AppError('Cannot link deleted information')
+    }
+
     if (compareAsc(new Date(statement.date), new Date(entry.date)) !== 0) {
       throw new AppError('Date does not match, please check your request')
     }
