@@ -35,6 +35,12 @@ class DeleteStatementService {
       throw new AppError('Statement not found', 404)
     }
 
+    if (!findStatement.created_manually) {
+      throw new AppError(
+        'Only statements which were created manually can be deleted',
+      )
+    }
+
     if (findStatement.entry_id && validate(findStatement.entry_id)) {
       const unlinkGeneralEntryToStatementService = new UnlinkGeneralEntryToStatementService(
         this.generalEntriesRepository,
