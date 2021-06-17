@@ -80,7 +80,7 @@ describe('DeleteStatement', () => {
     expect(statementsList[0].deleted).toBe(true)
     expect(statementsList[0].deleted_by).toBe(deleteData.userId)
   })
-  it('should be able to delete a Statement which is linked to a entry and unlink then', async () => {
+  it('should be able to delete a Statement that is linked to an entry and unlink then', async () => {
     const linkGeneralEntryToStatementService = new LinkGeneralEntryToStatementService(
       fakeGeneralEntriesRepository,
       fakeStatementsRepository,

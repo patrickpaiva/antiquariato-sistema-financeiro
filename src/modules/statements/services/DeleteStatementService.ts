@@ -37,7 +37,7 @@ class DeleteStatementService {
 
     if (!findStatement.created_manually) {
       throw new AppError(
-        'Only statements which were created manually can be deleted',
+        'Only statements that were created manually can be deleted',
       )
     }
 
