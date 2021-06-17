@@ -15,6 +15,13 @@ export class AlterStatementsTableToAddUpdatingColumns1623937752844
         isNullable: true,
       }),
     ])
+    await queryRunner.dropColumns('statements', [
+      new TableColumn({
+        name: 'updated_at',
+        type: 'timestamp with time zone',
+        isNullable: false,
+      }),
+    ])
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
@@ -28,6 +35,13 @@ export class AlterStatementsTableToAddUpdatingColumns1623937752844
         name: 'last_update_date',
         type: 'timestamp with time zone',
         isNullable: true,
+      }),
+    ])
+    await queryRunner.addColumns('statements', [
+      new TableColumn({
+        name: 'updated_at',
+        type: 'timestamp with time zone',
+        isNullable: false,
       }),
     ])
   }
