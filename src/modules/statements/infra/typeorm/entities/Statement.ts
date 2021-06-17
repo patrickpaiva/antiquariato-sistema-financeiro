@@ -66,7 +66,10 @@ class Statement {
   created_at: Date
 
   @UpdateDateColumn()
-  updated_at: Date
+  last_update_date: Date
+
+  @Column()
+  last_update_by: string
 }
 
 export default Statement
