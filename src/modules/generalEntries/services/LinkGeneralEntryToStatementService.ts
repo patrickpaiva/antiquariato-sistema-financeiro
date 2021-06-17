@@ -37,7 +37,7 @@ class LinkGeneralEntryToStatementService {
       throw new AppError('Statement or entry already linked')
     }
 
-    if (entry.deleted) {
+    if (entry.deleted || statement.deleted) {
       throw new AppError('Cannot link deleted information')
     }
 
