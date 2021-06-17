@@ -75,6 +75,77 @@ describe('UpdateStatement', () => {
     expect(statementsList[0].bank_id).toBe(237)
     expect(statementsList[0].last_update_by).toBe(fakeUser.id)
   })
+  it('should not be able to update a Statement with invalid user', async () => {
+    const newUser = {
+      name: 'Patrick',
+      email: 'teste@teste.com',
+      level: 2,
+      password: '123456',
+    }
+
+    const fakeUser = await createUser.execute(newUser)
+
+    const fakeStatement = await createStatement.execute({
+      date: new Date(),
+      bank_id: 104,
+      account_id: 200376,
+      transaction_type: 'DEBIT',
+      value: 5000,
+      transaction_history: '33',
+      transaction_method: 'BOLETO',
+      created_by: fakeUser.id,
+    })
+
+    const updatedData = {
+      id: fakeStatement.id,
+      userId: 'invalid-user-id',
+      bank_id: 237,
+    }
+
+    await expect(updateStatement.execute(updatedData)).rejects.toBeInstanceOf(
+      AppError,
+    )
+  })
+  it('should not be able to update a Statement with invalid statement_id', async () => {
+    const newUser = {
+      name: 'Patrick',
+      email: 'teste@teste.com',
+      level: 2,
+      password: '123456',
+    }
+
+    const fakeUser = await createUser.execute(newUser)
+
+    const updatedData = {
+      id: 'invalid_statement_id',
+      userId: fakeUser.id,
+      bank_id: 237,
+    }
+
+    await expect(updateStatement.execute(updatedData)).rejects.toBeInstanceOf(
+      AppError,
+    )
+  })
+  it('should not be able to update a Statement that does not exist', async () => {
+    const newUser = {
+      name: 'Patrick',
+      email: 'teste@teste.com',
+      level: 2,
+      password: '123456',
+    }
+
+    const fakeUser = await createUser.execute(newUser)
+
+    const updatedData = {
+      id: '8a50ea3b-aefc-4a4b-95ae-56c894829314',
+      userId: fakeUser.id,
+      bank_id: 237,
+    }
+
+    await expect(updateStatement.execute(updatedData)).rejects.toBeInstanceOf(
+      AppError,
+    )
+  })
   it('should be not able to update a Statement that is linked to an entry', async () => {
     const linkGeneralEntryToStatementService = new LinkGeneralEntryToStatementService(
       fakeGeneralEntriesRepository,
