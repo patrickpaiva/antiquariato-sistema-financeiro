@@ -12,7 +12,7 @@ interface IRequest {
   transaction_type?: string
   value?: number
   transaction_history?: string
-  transaction_method?: string
+  transaction_document?: string
   userId: string
 }
 
