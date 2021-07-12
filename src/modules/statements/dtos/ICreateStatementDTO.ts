@@ -5,7 +5,7 @@ export default interface ICreateStatementDTO {
   transaction_type: string
   value: number
   transaction_history: string
-  transaction_method: string
+  transaction_document: string
   created_by: string
   created_manually: boolean
 }

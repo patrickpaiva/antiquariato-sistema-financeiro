@@ -15,7 +15,7 @@ export default class StatementsController {
       transaction_type,
       value,
       transaction_history,
-      transaction_method,
+      transaction_document,
       created_by,
     } = request.body
 
@@ -28,7 +28,7 @@ export default class StatementsController {
       transaction_type,
       value,
       transaction_history,
-      transaction_method,
+      transaction_document,
       created_by,
     })
 

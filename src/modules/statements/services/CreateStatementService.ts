@@ -9,7 +9,7 @@ interface IRequest {
   transaction_type: string
   value: number
   transaction_history: string
-  transaction_method: string
+  transaction_document: string
   entry_id?: string | null
   created_by: string
 }
@@ -28,7 +28,7 @@ class CreateStatementService {
     transaction_type,
     value,
     transaction_history,
-    transaction_method,
+    transaction_document,
     created_by,
   }: IRequest): Promise<Statement> {
     const statement = await this.statementsRepository.create({
@@ -38,7 +38,7 @@ class CreateStatementService {
       transaction_type,
       value,
       transaction_history,
-      transaction_method,
+      transaction_document,
       created_by,
       created_manually: true,
     })

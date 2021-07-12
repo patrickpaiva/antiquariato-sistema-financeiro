@@ -35,7 +35,7 @@ class Statement {
   transaction_history: string
 
   @Column()
-  transaction_method: string
+  transaction_document: string
 
   @Column({ type: 'text', nullable: true })
   entry_id?: string | null
