@@ -5,6 +5,7 @@ import CreateStatementService from '@modules/statements/services/CreateStatement
 import ListStatementsService from '@modules/statements/services/ListStatementsService'
 import DeleteStatementService from '@modules/statements/services/DeleteStatementService'
 import UpdateStatementService from '@modules/statements/services/UpdateStatementService'
+import { ImportStatementsService } from '@modules/statements/services/ImportStatementsService'
 
 export default class StatementsController {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -33,6 +34,17 @@ export default class StatementsController {
     })
 
     return response.json(statement)
+  }
+
+  public async import(request: Request, response: Response): Promise<Response> {
+    const { created_by } = request.body
+    const { file } = request
+
+    const importStatements = container.resolve(ImportStatementsService)
+
+    await importStatements.execute(file, created_by)
+
+    return response.status(201).send()
   }
 
   public async show(request: Request, response: Response): Promise<Response> {
