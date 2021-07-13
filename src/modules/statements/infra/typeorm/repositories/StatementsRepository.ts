@@ -52,18 +52,18 @@ class StatementsRepository implements IStatementRepository {
     transaction_type,
     value,
     transaction_history,
-    transaction_method,
+    transaction_document,
     created_by,
     created_manually,
   }: ICreateStatementDTO): Promise<Statement> {
-    const statement = await this.ormRepository.create({
+    const statement = this.ormRepository.create({
       date,
       bank_id,
       account_id,
       transaction_type,
       value,
       transaction_history,
-      transaction_method,
+      transaction_document,
       created_by,
       created_manually,
     })
