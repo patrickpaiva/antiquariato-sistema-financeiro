@@ -2,6 +2,8 @@ import IStatementsRepository from '@modules/statements/repositories/IStatementsR
 import { injectable, inject } from 'tsyringe'
 import fs from 'fs'
 import ofx from 'ofx-convertjs'
+import { createHash } from 'crypto'
+import IImportsRepository from '../repositories/IImportsRepository'
 
 interface IImportTransaction {
   date: Date
@@ -21,11 +23,23 @@ interface IOFXTransaction {
   CHECKNUM: string
 }
 
+function parseDate(date: string): Date {
+  const dateShape = [date.slice(0, 4), date.slice(4, 6), date.slice(6, 8)].join(
+    '/',
+  )
+
+  const dateParsed = new Date(dateShape)
+
+  return dateParsed
+}
+
 @injectable()
 class ImportStatementsService {
   constructor(
     @inject('StatementsRepository')
     private statementsRepository: IStatementsRepository,
+    @inject('ImportsRepository')
+    private importsRepository: IImportsRepository,
   ) {}
 
   async loadTransactions(
@@ -80,6 +94,26 @@ class ImportStatementsService {
           created_by,
           created_manually: false,
         })
+      })
+
+      const archive = fs.readFileSync(file.path, 'utf-8')
+      const data = await ofx.toJson(archive)
+      const bankId = data.OFX.BANKMSGSRSV1.BANKACCTFROM.BANKID
+      const accountId = data.OFX.BANKMSGSRSV1.BANKACCTFROM.ACCTID
+      const startDate = parseDate(data.OFX.BANKMSGSRSV1.BANKTRANLIST.DTSTART)
+      const endDate = parseDate(data.OFX.BANKMSGSRSV1.BANKTRANLIST.DTEND)
+
+      const crypto = createHash('sha256')
+      crypto.update(archive)
+      const hash = crypto.digest('base64')
+
+      await this.importsRepository.create({
+        account_id: accountId,
+        bank_id: bankId,
+        created_by,
+        start_import_date: startDate,
+        end_import_date: endDate,
+        hash,
       })
     } catch (error) {
       console.error(error)
