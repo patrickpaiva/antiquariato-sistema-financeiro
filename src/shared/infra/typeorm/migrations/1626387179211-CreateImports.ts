@@ -1,12 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm'
 
-export default class CreateStatement1606394174983
-  implements MigrationInterface
-{
+export class CreateImports1626387179211 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'statements',
+        name: 'imports',
         columns: [
           {
             name: 'id',
@@ -14,11 +12,6 @@ export default class CreateStatement1606394174983
             isPrimary: true,
             generationStrategy: 'uuid',
             default: 'uuid_generate_v4()',
-          },
-          {
-            name: 'date',
-            type: 'date',
-            isNullable: false,
           },
           {
             name: 'bank_id',
@@ -31,29 +24,19 @@ export default class CreateStatement1606394174983
             isNullable: false,
           },
           {
-            name: 'transaction_type',
-            type: 'varchar',
+            name: 'start_import_date',
+            type: 'date',
             isNullable: false,
           },
           {
-            name: 'value',
-            type: 'bigint',
+            name: 'end_import_date',
+            type: 'date',
             isNullable: false,
           },
           {
-            name: 'transaction_history',
-            type: 'varchar',
-            isNullable: true,
-          },
-          {
-            name: 'transaction_method',
+            name: 'hash',
             type: 'varchar',
             isNullable: false,
-          },
-          {
-            name: 'entry_id',
-            type: 'uuid',
-            isNullable: true,
           },
           {
             name: 'created_by',
@@ -65,17 +48,12 @@ export default class CreateStatement1606394174983
             type: 'timestamp with time zone',
             default: 'now()',
           },
-          {
-            name: 'updated_at',
-            type: 'timestamp with time zone',
-            default: 'now()',
-          },
         ],
       }),
     )
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('statements')
+    await queryRunner.dropTable('imports')
   }
 }
