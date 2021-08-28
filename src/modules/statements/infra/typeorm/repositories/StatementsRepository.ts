@@ -37,8 +37,9 @@ class StatementsRepository implements IStatementRepository {
           params.minValue && params.maxValue
             ? Between(params.minValue, params.maxValue)
             : Not(IsNull()),
-        transaction_type:
-          params.transaction_type && Equal(params.transaction_type),
+        transaction_type: params.transaction_type
+          ? params.transaction_type && Equal(params.transaction_type)
+          : Not(IsNull()),
       })
 
       return statements
