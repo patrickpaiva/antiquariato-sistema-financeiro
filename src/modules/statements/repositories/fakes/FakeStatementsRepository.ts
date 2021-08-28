@@ -58,7 +58,7 @@ class StatementsRepository implements IStatementRepository {
     transaction_type,
     value,
     transaction_history,
-    transaction_method,
+    transaction_document,
     created_by,
     created_manually,
   }: ICreateStatementDTO): Promise<Statement> {
@@ -72,7 +72,7 @@ class StatementsRepository implements IStatementRepository {
       transaction_type,
       value,
       transaction_history,
-      transaction_method,
+      transaction_document,
       created_by,
       created_manually,
     })

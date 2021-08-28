@@ -4,6 +4,7 @@ import fs from 'fs'
 import ofx from 'ofx-convertjs'
 import { createHash } from 'crypto'
 import IImportsRepository from '../repositories/IImportsRepository'
+import AppError from '@shared/errors/AppError'
 
 interface IImportTransaction {
   date: Date
@@ -86,16 +87,6 @@ class ImportStatementsService {
     created_by: string,
   ): Promise<void> {
     try {
-      const transactions = await this.loadTransactions(file)
-
-      transactions.map(async transaction => {
-        await this.statementsRepository.create({
-          ...transaction,
-          created_by,
-          created_manually: false,
-        })
-      })
-
       const archive = fs.readFileSync(file.path, 'utf-8')
       const data = await ofx.toJson(archive)
       const bankId = data.OFX.BANKMSGSRSV1.BANKACCTFROM.BANKID
@@ -107,7 +98,13 @@ class ImportStatementsService {
       crypto.update(archive)
       const hash = crypto.digest('base64')
 
-      await this.importsRepository.create({
+      const findImport = await this.importsRepository.findByHash(hash)
+
+      if (findImport) {
+        throw new AppError('Arquivo já foi importado anteriormente', 409)
+      }
+
+      const importation = await this.importsRepository.create({
         account_id: accountId,
         bank_id: bankId,
         created_by,
@@ -115,8 +112,19 @@ class ImportStatementsService {
         end_import_date: endDate,
         hash,
       })
+
+      const transactions = await this.loadTransactions(file)
+
+      transactions.map(async transaction => {
+        await this.statementsRepository.create({
+          ...transaction,
+          created_by,
+          created_manually: false,
+          import_id: importation.id,
+        })
+      })
     } catch (error) {
-      console.error(error)
+      throw new AppError(error)
     }
   }
 }

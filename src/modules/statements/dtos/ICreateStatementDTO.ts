@@ -8,4 +8,5 @@ export default interface ICreateStatementDTO {
   transaction_document: string
   created_by: string
   created_manually: boolean
+  import_id?: string
 }

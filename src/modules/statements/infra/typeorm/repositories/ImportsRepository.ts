@@ -17,7 +17,7 @@ class ImportsRepository implements IImportRepository {
     start_import_date,
     end_import_date,
     created_by,
-  }: ICreateImportDTO): Promise<void> {
+  }: ICreateImportDTO): Promise<Import> {
     const importation = this.ormRepository.create({
       bank_id,
       account_id,
@@ -27,11 +27,27 @@ class ImportsRepository implements IImportRepository {
       created_by,
     })
 
-    await this.ormRepository.save(importation)
+    return this.ormRepository.save(importation)
   }
 
   public async findAll(): Promise<Import[] | undefined> {
     return this.ormRepository.find()
+  }
+
+  public async findById(id: string): Promise<Import | undefined> {
+    const findImport = await this.ormRepository.findOne({
+      where: { id },
+    })
+
+    return findImport
+  }
+
+  public async findByHash(hash: string): Promise<Import | undefined> {
+    const findImport = await this.ormRepository.findOne({
+      where: { hash },
+    })
+
+    return findImport
   }
 }
 

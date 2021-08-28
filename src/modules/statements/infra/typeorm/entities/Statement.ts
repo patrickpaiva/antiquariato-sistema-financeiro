@@ -70,6 +70,9 @@ class Statement {
 
   @Column()
   last_update_by: string
+
+  @Column()
+  import_id: string
 }
 
 export default Statement
