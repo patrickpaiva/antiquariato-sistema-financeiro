@@ -58,7 +58,7 @@ describe('UpdateStatement', () => {
       transaction_type: 'DEBIT',
       value: 5000,
       transaction_history: '33',
-      transaction_method: 'BOLETO',
+      transaction_document: 'BOLETO',
       created_by: fakeUser.id,
     })
 
@@ -92,7 +92,7 @@ describe('UpdateStatement', () => {
       transaction_type: 'DEBIT',
       value: 5000,
       transaction_history: '33',
-      transaction_method: 'BOLETO',
+      transaction_document: 'BOLETO',
       created_by: fakeUser.id,
     })
 
@@ -147,10 +147,11 @@ describe('UpdateStatement', () => {
     )
   })
   it('should be not able to update a Statement that is linked to an entry', async () => {
-    const linkGeneralEntryToStatementService = new LinkGeneralEntryToStatementService(
-      fakeGeneralEntriesRepository,
-      fakeStatementsRepository,
-    )
+    const linkGeneralEntryToStatementService =
+      new LinkGeneralEntryToStatementService(
+        fakeGeneralEntriesRepository,
+        fakeStatementsRepository,
+      )
 
     const newUser = {
       name: 'Patrick',
@@ -170,7 +171,7 @@ describe('UpdateStatement', () => {
       transaction_type: 'DEBIT',
       value: 5000,
       transaction_history: '33',
-      transaction_method: 'BOLETO',
+      transaction_document: 'BOLETO',
       created_by: fakeUser.id,
     })
 

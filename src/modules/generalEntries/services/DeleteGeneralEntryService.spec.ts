@@ -128,10 +128,11 @@ describe('CreateGeneralEntry', () => {
     )
   })
   it('should be able to delete a General Entry which is linked to a statement', async () => {
-    const linkGeneralEntryToStatementService = new LinkGeneralEntryToStatementService(
-      fakeGeneralEntriesRepository,
-      fakeStatementsRepository,
-    )
+    const linkGeneralEntryToStatementService =
+      new LinkGeneralEntryToStatementService(
+        fakeGeneralEntriesRepository,
+        fakeStatementsRepository,
+      )
     const newUser = {
       name: 'Patrick',
       email: 'teste@teste.com',
@@ -166,7 +167,7 @@ describe('CreateGeneralEntry', () => {
       transaction_type: 'DEBIT',
       value: 5000,
       transaction_history: '33',
-      transaction_method: 'BOLETO',
+      transaction_document: 'BOLETO',
       created_by: fakeUser.id,
     })
 

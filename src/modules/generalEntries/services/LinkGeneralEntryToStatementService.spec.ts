@@ -74,7 +74,7 @@ describe('LinkGeneralEntryToStatement', () => {
       transaction_type: 'DEBIT',
       value: 1300,
       transaction_history: '33',
-      transaction_method: 'BOLETO',
+      transaction_document: 'BOLETO',
       entry_id: null,
       created_by: 'd1bf7c2b-657f-49f0-9694-065ba997be9b',
     })
@@ -97,7 +97,7 @@ describe('LinkGeneralEntryToStatement', () => {
       transaction_type: 'DEBIT',
       value: 1300,
       transaction_history: '33',
-      transaction_method: 'BOLETO',
+      transaction_document: 'BOLETO',
       entry_id: null,
       created_by: 'd1bf7c2b-657f-49f0-9694-065ba997be9b',
     })
@@ -153,7 +153,7 @@ describe('LinkGeneralEntryToStatement', () => {
       transaction_type: 'DEBIT',
       value: 1300,
       transaction_history: '33',
-      transaction_method: 'BOLETO',
+      transaction_document: 'BOLETO',
       entry_id: null,
       created_by: 'd1bf7c2b-657f-49f0-9694-065ba997be9b',
     })
@@ -187,7 +187,7 @@ describe('LinkGeneralEntryToStatement', () => {
       transaction_type: 'DEBIT',
       value: 1300,
       transaction_history: '33',
-      transaction_method: 'BOLETO',
+      transaction_document: 'BOLETO',
       entry_id: null,
       created_by: 'd1bf7c2b-657f-49f0-9694-065ba997be9b',
     })
@@ -221,7 +221,7 @@ describe('LinkGeneralEntryToStatement', () => {
       transaction_type: 'DEBIT',
       value: 1300,
       transaction_history: '33',
-      transaction_method: 'BOLETO',
+      transaction_document: 'BOLETO',
       entry_id: null,
       created_by: 'd1bf7c2b-657f-49f0-9694-065ba997be9b',
     })
@@ -255,7 +255,7 @@ describe('LinkGeneralEntryToStatement', () => {
       transaction_type: 'DEBIT',
       value: 1300,
       transaction_history: '33',
-      transaction_method: 'BOLETO',
+      transaction_document: 'BOLETO',
       entry_id: null,
       created_by: 'd1bf7c2b-657f-49f0-9694-065ba997be9b',
     })
@@ -317,7 +317,7 @@ describe('LinkGeneralEntryToStatement', () => {
       transaction_type: 'DEBIT',
       value: 1300,
       transaction_history: '33',
-      transaction_method: 'BOLETO',
+      transaction_document: 'BOLETO',
       entry_id: null,
       created_by: fakeUser.id,
     })
@@ -367,7 +367,7 @@ describe('LinkGeneralEntryToStatement', () => {
       transaction_type: 'DEBIT',
       value: 1300,
       transaction_history: '33',
-      transaction_method: 'BOLETO',
+      transaction_document: 'BOLETO',
       entry_id: null,
       created_by: fakeUser.id,
     })

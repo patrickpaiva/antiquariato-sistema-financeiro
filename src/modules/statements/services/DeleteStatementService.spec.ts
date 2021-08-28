@@ -64,7 +64,7 @@ describe('DeleteStatement', () => {
       transaction_type: 'DEBIT',
       value: 5000,
       transaction_history: '33',
-      transaction_method: 'BOLETO',
+      transaction_document: 'BOLETO',
       created_by: fakeUser.id,
     })
 
@@ -81,10 +81,11 @@ describe('DeleteStatement', () => {
     expect(statementsList[0].deleted_by).toBe(deleteData.userId)
   })
   it('should be able to delete a Statement that is linked to an entry and unlink then', async () => {
-    const linkGeneralEntryToStatementService = new LinkGeneralEntryToStatementService(
-      fakeGeneralEntriesRepository,
-      fakeStatementsRepository,
-    )
+    const linkGeneralEntryToStatementService =
+      new LinkGeneralEntryToStatementService(
+        fakeGeneralEntriesRepository,
+        fakeStatementsRepository,
+      )
 
     const newUser = {
       name: 'Patrick',
@@ -104,7 +105,7 @@ describe('DeleteStatement', () => {
       transaction_type: 'DEBIT',
       value: 5000,
       transaction_history: '33',
-      transaction_method: 'BOLETO',
+      transaction_document: 'BOLETO',
       created_by: fakeUser.id,
     })
 
