@@ -4,4 +4,5 @@ export default interface IFilterStatementsParamsDTO {
   maxValue?: number
   minValue?: number
   transaction_type?: 'CREDIT' | 'DEBIT'
+  import_id?: string
 }

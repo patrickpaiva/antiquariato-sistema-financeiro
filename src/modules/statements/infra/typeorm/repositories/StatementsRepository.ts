@@ -40,6 +40,9 @@ class StatementsRepository implements IStatementRepository {
         transaction_type: params.transaction_type
           ? params.transaction_type && Equal(params.transaction_type)
           : Not(IsNull()),
+        import_id: params.import_id
+          ? params.import_id && Equal(params.import_id)
+          : Not(IsNull()),
       })
 
       return statements
