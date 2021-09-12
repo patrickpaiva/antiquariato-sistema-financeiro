@@ -7,6 +7,10 @@ import { v4 as uuid } from 'uuid'
 class StatementsRepository implements IStatementRepository {
   private statements: Statement[] = []
 
+  hardRemove(statement: Statement[]): Promise<Statement[]> {
+    throw new Error('Method not implemented.')
+  }
+
   public async findById(id: string): Promise<Statement | undefined> {
     const statement = this.statements.find(item => item.id === id)
 

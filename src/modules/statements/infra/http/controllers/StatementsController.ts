@@ -6,6 +6,7 @@ import ListStatementsService from '@modules/statements/services/ListStatementsSe
 import DeleteStatementService from '@modules/statements/services/DeleteStatementService'
 import UpdateStatementService from '@modules/statements/services/UpdateStatementService'
 import { ImportStatementsService } from '@modules/statements/services/ImportStatementsService'
+import { UnDoImportStatementesService } from '@modules/statements/services/UnDoImportStatementsService'
 
 export default class StatementsController {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -43,6 +44,19 @@ export default class StatementsController {
     const importStatements = container.resolve(ImportStatementsService)
 
     await importStatements.execute(file, created_by)
+
+    return response.status(201).send()
+  }
+
+  public async unDoImport(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { id } = request.body
+
+    const unDoImportStatements = container.resolve(UnDoImportStatementesService)
+
+    await unDoImportStatements.execute(id)
 
     return response.status(201).send()
   }

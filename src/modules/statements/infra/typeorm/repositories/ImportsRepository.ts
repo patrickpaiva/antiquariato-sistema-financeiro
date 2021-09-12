@@ -30,6 +30,10 @@ class ImportsRepository implements IImportRepository {
     return this.ormRepository.save(importation)
   }
 
+  public async delete(importation: Import): Promise<Import> {
+    return this.ormRepository.remove(importation)
+  }
+
   public async findAll(): Promise<Import[] | undefined> {
     return this.ormRepository.find()
   }

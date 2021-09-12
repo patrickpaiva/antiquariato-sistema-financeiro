@@ -82,6 +82,10 @@ class StatementsRepository implements IStatementRepository {
   public async update(statement: Statement): Promise<Statement> {
     return this.ormRepository.save(statement)
   }
+
+  public async hardRemove(statement: Statement[]): Promise<Statement[]> {
+    return this.ormRepository.remove(statement)
+  }
 }
 
 export default StatementsRepository

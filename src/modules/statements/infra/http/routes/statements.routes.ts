@@ -25,4 +25,6 @@ statementsRouter.post(
   statementsController.import,
 )
 
+statementsRouter.delete('/import', statementsController.unDoImport)
+
 export default statementsRouter
