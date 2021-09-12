@@ -124,7 +124,7 @@ class ImportStatementsService {
         })
       })
     } catch (error) {
-      throw new AppError(error)
+      throw new AppError('Ocorreu um erro ao importar. Tente novamente.', 400)
     }
   }
 }

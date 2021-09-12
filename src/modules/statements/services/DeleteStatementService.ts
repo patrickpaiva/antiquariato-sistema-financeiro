@@ -42,10 +42,11 @@ class DeleteStatementService {
     }
 
     if (findStatement.entry_id && validate(findStatement.entry_id)) {
-      const unlinkGeneralEntryToStatementService = new UnlinkGeneralEntryToStatementService(
-        this.generalEntriesRepository,
-        this.statementsRepository,
-      )
+      const unlinkGeneralEntryToStatementService =
+        new UnlinkGeneralEntryToStatementService(
+          this.generalEntriesRepository,
+          this.statementsRepository,
+        )
 
       await unlinkGeneralEntryToStatementService.execute({
         id: findStatement.entry_id,
