@@ -8,4 +8,6 @@ export default interface IUsersRepository {
   findAll(params?: IFilterUsersParamsDTO): Promise<User[] | undefined>
   create(data: ICreateUserDTO): Promise<User>
   save(user: User): Promise<User>
+  delete(user: User): Promise<void>
+  update(user: User): Promise<User>
 }

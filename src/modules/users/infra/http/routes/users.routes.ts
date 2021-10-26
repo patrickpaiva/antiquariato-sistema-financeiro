@@ -11,5 +11,6 @@ usersRouter.use(ensureAuthenticated)
 
 usersRouter.get('/', usersController.show)
 usersRouter.post('/', usersController.create)
+usersRouter.delete('/', usersController.delete)
 
 export default usersRouter

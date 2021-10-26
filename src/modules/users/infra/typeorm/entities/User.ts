@@ -26,6 +26,15 @@ class User {
   @Column('int')
   level: number
 
+  @Column()
+  deleted: boolean
+
+  @Column()
+  deleted_by: string
+
+  @Column()
+  deleted_date: Date
+
   @CreateDateColumn()
   created_at: Date
 
