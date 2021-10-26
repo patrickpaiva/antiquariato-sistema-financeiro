@@ -9,6 +9,7 @@ const usersController = new UsersController()
 
 usersRouter.use(ensureAuthenticated)
 
+usersRouter.get('/', usersController.show)
 usersRouter.post('/', usersController.create)
 
 export default usersRouter

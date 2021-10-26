@@ -1,8 +1,9 @@
 import User from '@modules/users/infra/typeorm/entities/User'
-import { getRepository, Repository } from 'typeorm'
+import { Equal, getRepository, ILike, IsNull, Not, Repository } from 'typeorm'
 
 import IUsersRepository from '@modules/users/repositories/IUsersRepository'
 import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO'
+import IFilterUsersParamsDTO from '@modules/users/dtos/IFilterUsersParamsDTO'
 
 class UsersRepository implements IUsersRepository {
   private ormRepository: Repository<User>
@@ -23,6 +24,34 @@ class UsersRepository implements IUsersRepository {
     const findUser = await this.ormRepository.findOne({ where: { email } })
 
     return findUser
+  }
+
+  public async findAll(
+    params: IFilterUsersParamsDTO,
+  ): Promise<User[] | undefined> {
+    if (Object.keys(params).length === 0) {
+      const users = await this.ormRepository.find({
+        order: {
+          name: 'DESC',
+        },
+      })
+      return users
+    } else {
+      const users = await this.ormRepository.find({
+        name: params.name
+          ? params.name && ILike(`%${params.name}%`)
+          : Not(IsNull()),
+        email: params.email
+          ? params.email && Equal(params.email)
+          : Not(IsNull()),
+        level: params.level
+          ? params.level && Equal(params.level)
+          : Not(IsNull()),
+        id: params.id ? params.id && Equal(params.id) : Not(IsNull()),
+      })
+
+      return users
+    }
   }
 
   public async create({
