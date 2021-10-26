@@ -123,8 +123,8 @@ class ImportStatementsService {
           import_id: importation.id,
         })
       })
-    } catch (error) {
-      throw new AppError('Ocorreu um erro ao importar. Tente novamente.', 400)
+    } catch (error: any) {
+      throw new AppError(error.message, error.statusCode)
     }
   }
 }
