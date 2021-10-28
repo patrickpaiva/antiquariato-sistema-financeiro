@@ -35,11 +35,14 @@ class User {
   @Column()
   deleted_date: Date
 
+  @UpdateDateColumn()
+  last_update_date: Date
+
+  @Column()
+  last_update_by: string
+
   @CreateDateColumn()
   created_at: Date
-
-  @UpdateDateColumn()
-  updated_at: Date
 }
 
 export default User

@@ -4,6 +4,7 @@ import { container } from 'tsyringe'
 import CreateUserService from '@modules/users/services/CreateUserService'
 import ListUsersService from '@modules/users/services/ListUsersService'
 import DeleteUserService from '@modules/users/services/DeleteUserService'
+import UpdateUserService from '@modules/users/services/UpdateUserService'
 
 export default class UsersController {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -37,5 +38,13 @@ export default class UsersController {
     await deleteUser.execute(request.body)
 
     return response.json({ message: 'Deleted Successfully' })
+  }
+
+  public async update(request: Request, response: Response): Promise<Response> {
+    const updateUser = container.resolve(UpdateUserService)
+
+    const user = await updateUser.execute(request.body)
+
+    return response.json(user)
   }
 }
