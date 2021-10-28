@@ -84,6 +84,16 @@ class FakeUsersRepository implements IUsersRepository {
 
     this.users = filteredUsers
   }
+
+  public async update(user: User): Promise<User> {
+    const filteredUsers = this.users.filter(item => item.id !== user.id)
+
+    filteredUsers.push(user)
+
+    this.users = filteredUsers
+
+    return user
+  }
 }
 
 export default FakeUsersRepository
