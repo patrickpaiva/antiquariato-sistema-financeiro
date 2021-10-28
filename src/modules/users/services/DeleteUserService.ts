@@ -21,15 +21,19 @@ class DeleteUserService {
     const admin = await this.usersRepository.findById(adminId)
 
     if (!user) {
-      throw new AppError('User not found')
+      throw new AppError('User not found', 404)
     }
 
     if (!admin) {
-      throw new AppError('Admin not found')
+      throw new AppError('Admin not found', 404)
     }
 
     if (admin.level !== 1) {
-      throw new AppError('User has no privilege to delete')
+      throw new AppError('User has no privilege to delete', 403)
+    }
+
+    if (user.id === admin.id) {
+      throw new AppError('You cannot delete yourself', 403)
     }
 
     const deletedUser = {
