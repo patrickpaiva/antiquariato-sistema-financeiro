@@ -6,9 +6,9 @@ import User from '../infra/typeorm/entities/User'
 
 interface IRequest {
   id: string
-  email: string
-  name: string
-  password: string
+  email?: string
+  name?: string
+  password?: string
   adminId: string
 }
 
