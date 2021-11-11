@@ -11,16 +11,16 @@ class ImportsRepository implements IImportRepository {
   }
 
   public async create({
-    bank_id,
-    account_id,
+    bank_number,
+    account_number,
     hash,
     start_import_date,
     end_import_date,
     created_by,
   }: ICreateImportDTO): Promise<Import> {
     const importation = this.ormRepository.create({
-      bank_id,
-      account_id,
+      bank_number,
+      account_number,
       hash,
       start_import_date,
       end_import_date,

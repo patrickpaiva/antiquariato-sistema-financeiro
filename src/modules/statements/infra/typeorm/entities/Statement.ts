@@ -20,10 +20,10 @@ class Statement {
   date: Date
 
   @Column('int')
-  bank_id: number
+  bank_number: number
 
   @Column('int')
-  account_id: number
+  account_number: number
 
   @Column()
   transaction_type: string

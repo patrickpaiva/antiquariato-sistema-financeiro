@@ -51,8 +51,8 @@ class StatementsRepository implements IStatementRepository {
 
   public async create({
     date,
-    bank_id,
-    account_id,
+    bank_number,
+    account_number,
     transaction_type,
     value,
     transaction_history,
@@ -63,8 +63,8 @@ class StatementsRepository implements IStatementRepository {
   }: ICreateStatementDTO): Promise<Statement> {
     const statement = this.ormRepository.create({
       date,
-      bank_id,
-      account_id,
+      bank_number,
+      account_number,
       transaction_type,
       value,
       transaction_history,

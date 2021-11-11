@@ -12,8 +12,8 @@ export default class StatementsController {
   public async create(request: Request, response: Response): Promise<Response> {
     const {
       date,
-      bank_id,
-      account_id,
+      bank_number,
+      account_number,
       transaction_type,
       value,
       transaction_history,
@@ -25,8 +25,8 @@ export default class StatementsController {
 
     const statement = await createStatement.execute({
       date,
-      bank_id,
-      account_id,
+      bank_number,
+      account_number,
       transaction_type,
       value,
       transaction_history,

@@ -69,8 +69,8 @@ describe('LinkGeneralEntryToStatement', () => {
 
     const newStatement = await createStatementsService.execute({
       date: new Date('2020-12-30'),
-      bank_id: 104,
-      account_id: 200375,
+      bank_number: 104,
+      account_number: 200375,
       transaction_type: 'DEBIT',
       value: 1300,
       transaction_history: '33',
@@ -92,8 +92,8 @@ describe('LinkGeneralEntryToStatement', () => {
   it('should not be able to link a General Entry with invalid Id to a Statement', async () => {
     const newStatement = await createStatementsService.execute({
       date: new Date('2020-12-30'),
-      bank_id: 104,
-      account_id: 200375,
+      bank_number: 104,
+      account_number: 200375,
       transaction_type: 'DEBIT',
       value: 1300,
       transaction_history: '33',
@@ -148,8 +148,8 @@ describe('LinkGeneralEntryToStatement', () => {
 
     const newStatement = await createStatementsService.execute({
       date: new Date('2020-12-30'),
-      bank_id: 104,
-      account_id: 200375,
+      bank_number: 104,
+      account_number: 200375,
       transaction_type: 'DEBIT',
       value: 1300,
       transaction_history: '33',
@@ -182,8 +182,8 @@ describe('LinkGeneralEntryToStatement', () => {
 
     const newStatement = await createStatementsService.execute({
       date: new Date('2020-12-30'),
-      bank_id: 104,
-      account_id: 200375,
+      bank_number: 104,
+      account_number: 200375,
       transaction_type: 'DEBIT',
       value: 1300,
       transaction_history: '33',
@@ -216,8 +216,8 @@ describe('LinkGeneralEntryToStatement', () => {
 
     const newStatement = await createStatementsService.execute({
       date: new Date('2020-12-31'),
-      bank_id: 104,
-      account_id: 200375,
+      bank_number: 104,
+      account_number: 200375,
       transaction_type: 'DEBIT',
       value: 1300,
       transaction_history: '33',
@@ -250,8 +250,8 @@ describe('LinkGeneralEntryToStatement', () => {
 
     const newStatement = await createStatementsService.execute({
       date: new Date('2020-12-31'),
-      bank_id: 104,
-      account_id: 200375,
+      bank_number: 104,
+      account_number: 200375,
       transaction_type: 'DEBIT',
       value: 1300,
       transaction_history: '33',
@@ -312,8 +312,8 @@ describe('LinkGeneralEntryToStatement', () => {
 
     const newStatement = await createStatementsService.execute({
       date: new Date('2020-12-31'),
-      bank_id: 104,
-      account_id: 200375,
+      bank_number: 104,
+      account_number: 200375,
       transaction_type: 'DEBIT',
       value: 1300,
       transaction_history: '33',
@@ -362,8 +362,8 @@ describe('LinkGeneralEntryToStatement', () => {
 
     const newStatement = await createStatementsService.execute({
       date: new Date('2020-12-31'),
-      bank_id: 104,
-      account_id: 200375,
+      bank_number: 104,
+      account_number: 200375,
       transaction_type: 'DEBIT',
       value: 1300,
       transaction_history: '33',

@@ -59,8 +59,8 @@ describe('DeleteStatement', () => {
 
     const fakeStatement = await createStatement.execute({
       date: new Date(),
-      bank_id: 104,
-      account_id: 200376,
+      bank_number: 104,
+      account_number: 200376,
       transaction_type: 'DEBIT',
       value: 5000,
       transaction_history: '33',
@@ -100,8 +100,8 @@ describe('DeleteStatement', () => {
 
     const fakeStatement = await createStatement.execute({
       date: fakeDate,
-      bank_id: 104,
-      account_id: 200376,
+      bank_number: 104,
+      account_number: 200376,
       transaction_type: 'DEBIT',
       value: 5000,
       transaction_history: '33',

@@ -8,8 +8,8 @@ import AppError from '@shared/errors/AppError'
 
 interface IImportTransaction {
   date: Date
-  bank_id: number
-  account_id: number
+  bank_number: number
+  account_number: number
   transaction_type: string
   value: number
   transaction_history: string
@@ -69,8 +69,8 @@ class ImportStatementsService {
 
         transactions.push({
           date: dateParse,
-          bank_id: bankId,
-          account_id: accountId,
+          bank_number: bankId,
+          account_number: accountId,
           transaction_type: item.TRNTYPE,
           value: parseInt(valueParse),
           transaction_history: item.MEMO,
@@ -105,8 +105,8 @@ class ImportStatementsService {
       }
 
       const importation = await this.importsRepository.create({
-        account_id: accountId,
-        bank_id: bankId,
+        account_number: accountId,
+        bank_number: bankId,
         created_by,
         start_import_date: startDate,
         end_import_date: endDate,

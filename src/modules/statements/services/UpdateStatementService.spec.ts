@@ -53,8 +53,8 @@ describe('UpdateStatement', () => {
 
     const fakeStatement = await createStatement.execute({
       date: new Date(),
-      bank_id: 104,
-      account_id: 200376,
+      bank_number: 104,
+      account_number: 200376,
       transaction_type: 'DEBIT',
       value: 5000,
       transaction_history: '33',
@@ -65,14 +65,14 @@ describe('UpdateStatement', () => {
     const updatedData = {
       id: fakeStatement.id,
       userId: fakeUser.id,
-      bank_id: 237,
+      bank_number: 237,
     }
 
     await updateStatement.execute(updatedData)
 
     const statementsList = await listAllStatements.execute()
 
-    expect(statementsList[0].bank_id).toBe(237)
+    expect(statementsList[0].bank_number).toBe(237)
     expect(statementsList[0].last_update_by).toBe(fakeUser.id)
   })
   it('should not be able to update a Statement with invalid user', async () => {
@@ -87,8 +87,8 @@ describe('UpdateStatement', () => {
 
     const fakeStatement = await createStatement.execute({
       date: new Date(),
-      bank_id: 104,
-      account_id: 200376,
+      bank_number: 104,
+      account_number: 200376,
       transaction_type: 'DEBIT',
       value: 5000,
       transaction_history: '33',
@@ -99,7 +99,7 @@ describe('UpdateStatement', () => {
     const updatedData = {
       id: fakeStatement.id,
       userId: 'invalid-user-id',
-      bank_id: 237,
+      bank_number: 237,
     }
 
     await expect(updateStatement.execute(updatedData)).rejects.toBeInstanceOf(
@@ -119,7 +119,7 @@ describe('UpdateStatement', () => {
     const updatedData = {
       id: 'invalid_statement_id',
       userId: fakeUser.id,
-      bank_id: 237,
+      bank_number: 237,
     }
 
     await expect(updateStatement.execute(updatedData)).rejects.toBeInstanceOf(
@@ -139,7 +139,7 @@ describe('UpdateStatement', () => {
     const updatedData = {
       id: '8a50ea3b-aefc-4a4b-95ae-56c894829314',
       userId: fakeUser.id,
-      bank_id: 237,
+      bank_number: 237,
     }
 
     await expect(updateStatement.execute(updatedData)).rejects.toBeInstanceOf(
@@ -166,8 +166,8 @@ describe('UpdateStatement', () => {
 
     const fakeStatement = await createStatement.execute({
       date: fakeDate,
-      bank_id: 104,
-      account_id: 200376,
+      bank_number: 104,
+      account_number: 200376,
       transaction_type: 'DEBIT',
       value: 5000,
       transaction_history: '33',
@@ -199,7 +199,7 @@ describe('UpdateStatement', () => {
     const updatedData = {
       id: fakeStatement.id,
       userId: fakeUser.id,
-      bank_id: 237,
+      bank_number: 237,
     }
 
     await expect(updateStatement.execute(updatedData)).rejects.toBeInstanceOf(

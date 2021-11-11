@@ -7,8 +7,8 @@ import IStatementsRepository from '../repositories/IStatementsRepository'
 
 interface IRequest {
   id: string
-  bank_id?: number
-  account_id?: number
+  bank_number?: number
+  account_number?: number
   transaction_type?: string
   value?: number
   transaction_history?: string

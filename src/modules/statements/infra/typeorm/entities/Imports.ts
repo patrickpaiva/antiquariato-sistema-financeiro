@@ -11,10 +11,10 @@ class Import {
   id: string
 
   @Column('int')
-  bank_id: number
+  bank_number: number
 
   @Column('int')
-  account_id: number
+  account_number: number
 
   @Column()
   start_import_date: Date

@@ -4,8 +4,8 @@ import { injectable, inject } from 'tsyringe'
 
 interface IRequest {
   date: Date
-  bank_id: number
-  account_id: number
+  bank_number: number
+  account_number: number
   transaction_type: string
   value: number
   transaction_history: string
@@ -23,8 +23,8 @@ class CreateStatementService {
 
   public async execute({
     date,
-    bank_id,
-    account_id,
+    bank_number,
+    account_number,
     transaction_type,
     value,
     transaction_history,
@@ -33,8 +33,8 @@ class CreateStatementService {
   }: IRequest): Promise<Statement> {
     const statement = await this.statementsRepository.create({
       date,
-      bank_id,
-      account_id,
+      bank_number,
+      account_number,
       transaction_type,
       value,
       transaction_history,

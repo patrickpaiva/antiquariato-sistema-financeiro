@@ -1,7 +1,7 @@
 export default interface ICreateStatementDTO {
   date: Date
-  bank_id: number
-  account_id: number
+  bank_number: number
+  account_number: number
   transaction_type: string
   value: number
   transaction_history: string
