@@ -55,6 +55,7 @@ class AccountsRepository implements IAccountsRepository {
           ? params.account_type && Equal(params.account_type)
           : Not(IsNull()),
         id: params.id ? params.id && Equal(params.id) : Not(IsNull()),
+        deleted: params.deleted,
       })
 
       return accounts

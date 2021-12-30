@@ -6,10 +6,12 @@ import {
   UpdateDateColumn,
   OneToOne,
   JoinColumn,
+  ManyToOne,
 } from 'typeorm'
 
 import User from '@modules/users/infra/typeorm/entities/User'
 import GeneralEntry from '@modules/generalEntries/infra/typeorm/entities/GeneralEntry'
+import Account from '@modules/accounts/infra/typeorm/entities/Account'
 
 @Entity('statements')
 class Statement {
@@ -52,6 +54,9 @@ class Statement {
   @OneToOne(() => User)
   @JoinColumn({ name: 'created_by' })
   user: User
+
+  @ManyToOne(() => Account, account => account.statements, { eager: true })
+  account: Account
 
   @Column()
   deleted: boolean

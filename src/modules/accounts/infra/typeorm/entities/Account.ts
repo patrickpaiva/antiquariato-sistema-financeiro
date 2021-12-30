@@ -1,9 +1,11 @@
+import Statement from '@modules/statements/infra/typeorm/entities/Statement'
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm'
 
 @Entity('accounts')
@@ -25,6 +27,9 @@ class Account {
 
   @Column('')
   account_type: number
+
+  @OneToMany(() => Statement, statement => statement.account)
+  statements: Statement[]
 
   @Column()
   deleted: boolean

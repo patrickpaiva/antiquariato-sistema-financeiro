@@ -12,6 +12,9 @@ import ImportsRepository from '@modules/statements/infra/typeorm/repositories/Im
 import IUsersRepository from '@modules/users/repositories/IUsersRepository'
 import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepository'
 
+import IAccountsRepository from '@modules/accounts/repositories/IAccountsRepository'
+import AccountsRepository from '@modules/accounts/infra/typeorm/repositories/AccountsRepository'
+
 container.registerSingleton<IGeneralEntriesRepository>(
   'GeneralEntriesRepository',
   GeneralEntriesRepository,
@@ -30,4 +33,9 @@ container.registerSingleton<IImportsRepository>(
 container.registerSingleton<IUsersRepository>(
   'UsersRepository',
   UsersRepository,
+)
+
+container.registerSingleton<IAccountsRepository>(
+  'AccountsRepository',
+  AccountsRepository,
 )

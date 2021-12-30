@@ -1,50 +1,55 @@
 import { Request, Response } from 'express'
 import { container } from 'tsyringe'
 
-import CreateUserService from '@modules/users/services/CreateUserService'
-import ListUsersService from '@modules/users/services/ListUsersService'
-import DeleteUserService from '@modules/users/services/DeleteUserService'
-import UpdateUserService from '@modules/users/services/UpdateUserService'
+import CreateAccountService from '@modules/accounts/services/CreateAccountService'
+import ListAccountsService from '@modules/accounts/services/ListAccountsService'
+import DeleteAccountService from '@modules/accounts/services/DeleteAccountService'
+import UpdateAccountService from '@modules/accounts/services/UpdateAccountService'
 
-export default class UsersController {
+export default class AccountsController {
   public async create(request: Request, response: Response): Promise<Response> {
-    const { name, email, level, password } = request.body
+    const {
+      bank_number,
+      agency_number,
+      account_number,
+      account_type,
+      bank_name,
+    } = request.body
 
-    const createUser = container.resolve(CreateUserService)
+    const createAccount = container.resolve(CreateAccountService)
 
-    const user = await createUser.execute({
-      name,
-      email,
-      level,
-      password,
+    const account = await createAccount.execute({
+      bank_number,
+      agency_number,
+      account_number,
+      account_type,
+      bank_name,
     })
 
-    delete user.password
-
-    return response.json(user)
+    return response.json(account)
   }
 
   public async show(request: Request, response: Response): Promise<Response> {
-    const listUsers = container.resolve(ListUsersService)
+    const listAccounts = container.resolve(ListAccountsService)
 
-    const users = await listUsers.execute(request.body)
+    const accounts = await listAccounts.execute(request.body)
 
-    return response.json(users)
+    return response.json(accounts)
   }
 
   public async delete(request: Request, response: Response): Promise<Response> {
-    const deleteUser = container.resolve(DeleteUserService)
+    const deleteAccount = container.resolve(DeleteAccountService)
 
-    await deleteUser.execute(request.body)
+    await deleteAccount.execute(request.body)
 
     return response.json({ message: 'Deleted Successfully' })
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
-    const updateUser = container.resolve(UpdateUserService)
+    const updateAccount = container.resolve(UpdateAccountService)
 
-    const user = await updateUser.execute(request.body)
+    const account = await updateAccount.execute(request.body)
 
-    return response.json(user)
+    return response.json(account)
   }
 }
