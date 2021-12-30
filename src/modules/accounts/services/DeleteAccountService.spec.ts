@@ -43,6 +43,7 @@ describe('DeleteAccount', () => {
       agency_number: 1,
       account_number: 1234,
       account_type: 1,
+      bank_name: 'teste',
     }
 
     const response = await createAccount.execute(account)
@@ -66,6 +67,7 @@ describe('DeleteAccount', () => {
       agency_number: 1,
       account_number: 1234,
       account_type: 1,
+      bank_name: 'teste',
     }
 
     const response = await createAccount.execute(account)

@@ -18,6 +18,7 @@ class CreateAccountService {
     agency_number,
     account_number,
     account_type,
+    bank_name,
   }: ICreateAccountDTO): Promise<Account> {
     const checkAccountExists = await this.accountsRepository.findAll({
       bank_number,
@@ -34,6 +35,7 @@ class CreateAccountService {
       agency_number,
       account_number,
       account_type,
+      bank_name,
     })
 
     return account

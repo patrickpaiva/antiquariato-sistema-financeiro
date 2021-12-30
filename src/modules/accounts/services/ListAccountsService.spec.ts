@@ -18,6 +18,7 @@ describe('ListAccount', () => {
       agency_number: 1,
       account_number: 1234,
       account_type: 1,
+      bank_name: 'teste',
     }
 
     await createAccount.execute(newAccount)
@@ -28,6 +29,7 @@ describe('ListAccount', () => {
       agency_number: 4539,
       account_number: 12345,
       account_type: 1,
+      bank_name: 'teste',
     }
 
     await createAccount.execute(account)
@@ -42,6 +44,7 @@ describe('ListAccount', () => {
       agency_number: 4539,
       account_number: 12345,
       account_type: 1,
+      bank_name: 'teste',
     }
 
     await createAccount.execute(account)
@@ -51,6 +54,7 @@ describe('ListAccount', () => {
       agency_number: 4539,
       account_number: 123457,
       account_type: 1,
+      bank_name: 'teste',
     }
 
     await createAccount.execute(account2)
@@ -67,6 +71,7 @@ describe('ListAccount', () => {
       agency_number: 4539,
       account_number: 12345,
       account_type: 1,
+      bank_name: 'teste',
     }
 
     await createAccount.execute(account)

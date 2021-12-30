@@ -66,12 +66,14 @@ class AccountsRepository implements IAccountsRepository {
     agency_number,
     account_number,
     account_type,
+    bank_name,
   }: ICreateAccountDTO): Promise<Account> {
     const account = this.ormRepository.create({
       bank_number,
       agency_number,
       account_number,
       account_type,
+      bank_name,
     })
 
     await this.ormRepository.save(account)

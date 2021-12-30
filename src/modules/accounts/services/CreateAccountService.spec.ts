@@ -17,6 +17,7 @@ describe('CreateAccount', () => {
       agency_number: 1,
       account_number: 1234,
       account_type: 1,
+      bank_name: 'teste',
     }
 
     const fakeAccount = await createAccount.execute(newAccount)
@@ -30,6 +31,7 @@ describe('CreateAccount', () => {
       agency_number: 1,
       account_number: 1234,
       account_type: 1,
+      bank_name: 'teste',
     }
 
     await createAccount.execute(newAccount)
@@ -39,6 +41,7 @@ describe('CreateAccount', () => {
       agency_number: 1,
       account_number: 1234,
       account_type: 1,
+      bank_name: 'teste',
     }
 
     await expect(createAccount.execute(secondAccount)).rejects.toBeInstanceOf(

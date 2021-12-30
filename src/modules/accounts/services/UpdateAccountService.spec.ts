@@ -43,6 +43,7 @@ describe('UpdateAccount', () => {
       agency_number: 1,
       account_number: 1234,
       account_type: 1,
+      bank_name: 'teste',
     }
 
     await createAccount.execute(account)
@@ -60,6 +61,7 @@ describe('UpdateAccount', () => {
       agency_number: 1,
       account_number: 1234,
       account_type: 2,
+      bank_name: 'teste',
     })
 
     const accounts = await findAccounts.execute({ id: findAccount[0].id })
@@ -74,6 +76,7 @@ describe('UpdateAccount', () => {
       agency_number: 1,
       account_number: 1234,
       account_type: 1,
+      bank_name: 'teste',
     }
 
     await createAccount.execute(account)
@@ -101,6 +104,7 @@ describe('UpdateAccount', () => {
         agency_number: 1,
         account_number: 1234,
         account_type: 2,
+        bank_name: 'teste',
       }),
     ).rejects.toBeInstanceOf(AppError)
   })
@@ -113,6 +117,7 @@ describe('UpdateAccount', () => {
         agency_number: 1,
         account_number: 1234,
         account_type: 2,
+        bank_name: 'teste',
       }),
     ).rejects.toBeInstanceOf(AppError)
   })
@@ -122,6 +127,7 @@ describe('UpdateAccount', () => {
       agency_number: 1,
       account_number: 1234,
       account_type: 1,
+      bank_name: 'teste',
     }
 
     const accountToUpdate = await createAccount.execute(account)
@@ -134,6 +140,7 @@ describe('UpdateAccount', () => {
         agency_number: 1,
         account_number: 1234,
         account_type: 2,
+        bank_name: 'teste',
       }),
     ).rejects.toBeInstanceOf(AppError)
   })
@@ -143,6 +150,7 @@ describe('UpdateAccount', () => {
       agency_number: 1,
       account_number: 1234,
       account_type: 1,
+      bank_name: 'teste',
     }
 
     await createAccount.execute(account)
@@ -152,6 +160,7 @@ describe('UpdateAccount', () => {
       agency_number: 2,
       account_number: 12345,
       account_type: 2,
+      bank_name: 'teste',
     }
 
     await createAccount.execute(account2)
@@ -170,6 +179,7 @@ describe('UpdateAccount', () => {
         agency_number: 2,
         account_number: 12345,
         account_type: 2,
+        bank_name: 'teste',
       }),
     ).rejects.toBeInstanceOf(AppError)
   })
